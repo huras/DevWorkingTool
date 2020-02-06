@@ -12,4 +12,8 @@ class Workday extends Model
     {
         return $this->belongsToMany('App\Models\Project');
     }
+
+    public function notes(){
+        return $this->belongsToMany('App\Models\Note');
+    }
 }
