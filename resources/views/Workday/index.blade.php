@@ -11,9 +11,9 @@
             @endforeach
 
             @foreach ($workday->notes as $note)
-                <div style='white-space: pre;'>
-                    {{$note->content}}
-                </div>
+                <h4>{{$note->title}}</h4>
+                <?php $maxrows = 10; $rows = substr_count( $note->content, "\n" ) + 1; if($rows > $maxrows) { $rows = $maxrows;} ?>
+                <textarea style='width: 100%;' rows="{{$rows}}">{{$note->content}}</textarea>
             @endforeach
         </div>
     @endforeach
