@@ -1,1 +1,72 @@
-//
+@import "vendors/bootstrap.scss";
+@import "variables";
+
+.workday-notes-list{
+    .workday-note{
+        margin-top: 16px;
+
+        textarea{
+            width: 100%;
+            border: 0;
+        }
+
+        .btn-salvar{
+            display: none;
+        }
+
+        .titulo{
+            border: 0;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 4px;
+            padding: 4px;
+
+            &:focus{
+                border: unset;
+            }
+        }
+    }
+}
+
+.workday-slot{
+
+    .data{
+        background-color: black;
+        color: white;
+        font-size: 16px;
+        padding: 8px;
+    }
+
+    .project-list{
+        margin-top: 8px;
+
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+
+
+        .workday-project{
+            margin-bottom: 4px;
+            margin-left: 4px;
+            padding: 8px;
+            cursor: pointer;
+
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            background-color: transparent;
+            transition: all ease-in 0.3s;
+
+            img{
+                width: 35px;
+                margin-right: 8px;
+            }
+
+            &:hover{
+                background-color: rgb(219, 219, 219);
+                transition: all ease-in 0.3s;
+            }
+        }
+    }
+}

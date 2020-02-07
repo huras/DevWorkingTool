@@ -8,4 +8,5 @@ class Note extends Model
 {
     protected $table = 'notes';
 
+    public $fillable = ['content', 'title'];
 }

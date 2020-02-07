@@ -16,3 +16,5 @@ Route::get('/', function () {
 });
 
 Route::get('/workdays', 'WorkdayController@index');
+
+Route::post('/updateNote', 'NoteController@updateNote')->name('note.update');
