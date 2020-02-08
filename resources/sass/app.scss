@@ -29,12 +29,51 @@
 }
 
 .workday-slot{
+    margin-top: 8px;
 
-    .data{
+    .head{
         background-color: black;
-        color: white;
-        font-size: 16px;
-        padding: 8px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+
+        .data{
+            color: white;
+            font-size: 24px;
+            padding: 8px;
+            font-weight: bold;
+        }
+
+        .actions{
+            margin-left: 16px;
+
+            .action {
+                padding: 6px 10px;
+                border-radius: 5px;
+
+                &:hover{
+                    background-color: rgb(83, 83, 83);
+                }
+            }
+
+            .nova-nota{
+                border: 0;
+                background-color: transparent;
+
+                position: relative;
+
+                .icon{
+                    width: 16px;
+                }
+
+                .icon-x{
+                    width: 16px;
+                    position: absolute;
+                    right: 3px;
+                    top: 3px;
+                }
+            }
+        }
     }
 
     .project-list{

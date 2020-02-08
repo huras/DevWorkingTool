@@ -20,12 +20,20 @@
     <div class='container'>
         @foreach ($workdays as $workday)
             <div class='workday-slot'>
-                <div class='data'>
-                    <?php
-                        $newDate = date('d-m-Y', strtotime($workday->date));
-                        $newExplodedDate = explode('-', $newDate);
-                        echo $newExplodedDate[0].'/'.$meses[$newExplodedDate[1]].'/'.$newExplodedDate[2];
-                    ?>
+                <div class='head'>
+                    <div class='data'>
+                        <?php
+                            $newDate = date('d-m-Y', strtotime($workday->date));
+                            $newExplodedDate = explode('-', $newDate);
+                            echo $newExplodedDate[0].'/'.$meses[$newExplodedDate[1]].'/'.$newExplodedDate[2];
+                        ?>
+                    </div>
+                    <div class='actions'>
+                        <button type='button' onclick="appendNewNote({{$workday->id}});" title='Nova Nota' class='nova-nota action'>
+                            <img src="{{asset('/img/icons/sticky-note-regular.svg')}}" alt="" class='icon'>
+                            <img src="{{asset('/img/icons/plus-circle-solid.svg')}}" alt="" class='icon-x'>
+                        </button>
+                    </div>
                 </div>
 
                 <div class='project-list'>
@@ -38,8 +46,6 @@
                         </div>
                     @endforeach
                 </div>
-
-                <button type='button' onclick="appendNewNote({{$workday->id}});">Nova nota</button>
 
                 <div id='workday-notes-list' class='workday-notes-list'>
                     @foreach ($workday->notes as $note)
