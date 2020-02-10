@@ -17,4 +17,5 @@ Route::get('/', function () {
 
 Route::get('/workdays', 'WorkdayController@index');
 
-Route::post('/updateNote', 'NoteController@updateNote')->name('note.update');
+Route::post('/note/ajax/update', 'NoteController@updateNote')->name('note.update');
+Route::post('/note/ajax/store', 'NoteController@newWorkdaynote')->name('note.store');

@@ -9,4 +9,8 @@ class Note extends Model
     protected $table = 'notes';
 
     public $fillable = ['content', 'title'];
+
+    public function workdays(){
+        return $this->belongsToMany('App\Models\Workday');
+    }
 }

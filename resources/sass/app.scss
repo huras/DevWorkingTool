@@ -1,72 +1,75 @@
-@import "vendors/bootstrap.scss";
 @import "variables";
 
-.workday-notes-list{
-    .workday-note{
+.workday-notes-list {
+    .workday-note {
         margin-top: 16px;
 
-        textarea{
+        textarea {
             width: 100%;
             border: 0;
         }
 
-        .btn-salvar{
+        .btn-salvar {
             display: none;
         }
 
-        .titulo{
+        input {
+            width: 100%;
+        }
+
+        .titulo {
             border: 0;
             font-size: 24px;
             font-weight: bold;
             margin-bottom: 4px;
             padding: 4px;
 
-            &:focus{
+            &:focus {
                 border: unset;
             }
         }
     }
 }
 
-.workday-slot{
+.workday-slot {
     margin-top: 8px;
 
-    .head{
+    .head {
         background-color: black;
         display: flex;
         justify-content: flex-start;
         align-items: center;
 
-        .data{
+        .data {
             color: white;
             font-size: 24px;
             padding: 8px;
             font-weight: bold;
         }
 
-        .actions{
+        .actions {
             margin-left: 16px;
 
             .action {
                 padding: 6px 10px;
                 border-radius: 5px;
 
-                &:hover{
+                &:hover {
                     background-color: rgb(83, 83, 83);
                 }
             }
 
-            .nova-nota{
+            .nova-nota {
                 border: 0;
                 background-color: transparent;
 
                 position: relative;
 
-                .icon{
+                .icon {
                     width: 16px;
                 }
 
-                .icon-x{
+                .icon-x {
                     width: 16px;
                     position: absolute;
                     right: 3px;
@@ -76,7 +79,7 @@
         }
     }
 
-    .project-list{
+    .project-list {
         margin-top: 8px;
 
         display: flex;
@@ -84,8 +87,7 @@
         justify-content: flex-start;
         flex-wrap: wrap;
 
-
-        .workday-project{
+        .workday-project {
             margin-bottom: 4px;
             margin-left: 4px;
             padding: 8px;
@@ -97,12 +99,12 @@
             background-color: transparent;
             transition: all ease-in 0.3s;
 
-            img{
+            img {
                 width: 35px;
                 margin-right: 8px;
             }
 
-            &:hover{
+            &:hover {
                 background-color: rgb(219, 219, 219);
                 transition: all ease-in 0.3s;
             }

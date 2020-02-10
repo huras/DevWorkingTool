@@ -10,13 +10,16 @@
 
     <title> @yield('title') </title>
 
+    <link rel="stylesheet" href="{{asset('css/bootstrap.css')}}">
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
 </head>
 <body>
+
     @yield('content')
 
     {{-- Scripts --}}
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
     <script src="{{ asset('js/jquery.js') }}" defer></script>
+    <script src="{{ asset('js/bootstrap.js') }}" defer></script>
 </body>
 </html>
