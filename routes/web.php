@@ -10,12 +10,21 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/', 'WorkdayController@index');
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group(['prefix' => 'workday'], function () {
+    Route::get('/', 'WorkdayController@index')->name('workday.list');
 });
 
-Route::get('/workdays', 'WorkdayController@index');
+Route::group(['prefix' => 'project'], function () {
+    Route::get('/', 'ProjectController@index')->name('project.list');
+});
 
-Route::post('/note/ajax/update', 'NoteController@updateNote')->name('note.update');
-Route::post('/note/ajax/store', 'NoteController@newWorkdaynote')->name('note.store');
+Route::group(['prefix' => 'skill'], function () {
+    Route::get('/', 'SkillController@index')->name('skill.list');
+});
+
+Route::group(['prefix' => 'note'], function () {
+    Route::post('/ajax/update', 'NoteController@updateNote')->name('note.update');
+    Route::post('/ajax/store', 'NoteController@newWorkdaynote')->name('note.store');
+});

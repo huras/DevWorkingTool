@@ -13,4 +13,8 @@ class Note extends Model
     public function workdays(){
         return $this->belongsToMany('App\Models\Workday');
     }
+
+    public function skills(){
+        return $this->belongsToMany('App\Models\Skill');
+    }
 }

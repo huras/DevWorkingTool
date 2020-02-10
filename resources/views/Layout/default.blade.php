@@ -15,7 +15,9 @@
 </head>
 <body>
 
+    @include('components.header')
     @yield('content')
+    @include('components.footer')
 
     {{-- Scripts --}}
     {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}

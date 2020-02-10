@@ -15,6 +15,11 @@ class NoteController extends Controller
         $note->title = $request->title;
         $note->content = $request->content;
         $note->save();
+        return response()->json([
+            'status' => true,
+            'toast' => 'Nota atualizada com sucesso!',
+            'toast-type' => 'job-done'
+        ]);
     }
 
     public function newWorkdaynote(Request $request){
@@ -29,7 +34,12 @@ class NoteController extends Controller
         $note->workdays()->save($workday);
 
         //Sends the note id back to the request sender
-        return response()->json(['status' => true, 'data' => $note, 'toast' => 'Nova nota criada com sucesso!', 'toast-type' => 'job-done']);
+        return response()->json([
+            'status' => true,
+            'data' => $note,
+            'toast' => 'Nova nota criada com sucesso!',
+            'toast-type' => 'job-done'
+        ]);
     }
 
     // Common Methods

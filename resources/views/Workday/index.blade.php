@@ -18,8 +18,6 @@
         ];
     ?>
 
-
-
     <div class='container'>
         <?php $isFirstWorkDay = true; ?>
         @foreach ($workdays as $workday)
@@ -58,7 +56,7 @@
                     @endforeach
                 </div>
 
-                <div id="workday-notes-list-{{$workday->id}}" class="workday-notes-list <?= $isFirstWorkDay?'collapse in':'collapse' ?>" aria-labelledby="headingTwo" data-parent="#workday-{{$workday->id}}">
+                <div id="workday-notes-list-{{$workday->id}}" class="workday-notes-list <?= $isFirstWorkDay?'collapse show':'collapse' ?>" aria-labelledby="headingTwo" data-parent="#workday-{{$workday->id}}">
                     <?php /*
                     <div class='workday-note'>
                         <input onclick="noteTitleOnclick(event);" oninput="showSaveButton({{$note->id}})" id='note-title-{{$note->id}}' type="text" value='{{$note->title}}' class='titulo'>
@@ -81,6 +79,10 @@
     </div>
 
     <script>
+        function afterSaveNote(noteID){
+            let textarea = document.getElementById('note-content-'+noteID);
+            calculateNoteContentRows(textarea);
+        }
         function noteTitleOnclick(e){
             let input = e.target;
             if(input.value == '[New Note]'){
@@ -89,9 +91,17 @@
         }
         function notecontetOnclick(e){
             let input = e.target;
-            if(input.value == '[empty]'){
+            if(input.value == '[empty]\n'){
                 input.select();
             }
+        }
+
+        function calculateNoteContentRows(textarea){
+            let maxRows = 10;
+            var rows = (textarea.value.match(/\n/g) || []).length;
+            if(rows > maxRows)
+                rows = maxRows;
+            textarea.setAttribute('rows', rows + 1);
         }
 
         function insertNote(newNoteID, titleValue = "[New Note]", contentValue = '[empty]', workdayID = null){
@@ -107,27 +117,23 @@
             title.classList.add('titulo');
             title.value = titleValue;
             title.setAttribute('id', 'note-title-'+newNoteID);
-            title.onclick = (event) => {
+            title.onfocus = (event) => {
                 noteTitleOnclick(event);
             }
 
             let text = document.createElement('textarea');
             text.setAttribute('rows', 2);
-            text.value = contentValue;
+            text.innerHTML = contentValue;
             if(text.value[text.value.length - 1] != '\n')
                 text.value += '\n';
             text.setAttribute('id', 'note-content-'+newNoteID);
-            text.onclick = (event) => {
+            text.onfocus = (event) => {
                 notecontetOnclick(event);
             }
             text.oninput = (event) => {
                 showSaveButton(newNoteID);
             }
-            let maxRows = 10;
-            var rows = (text.value.match(/\n/g) || []).length;
-            if(rows > maxRows)
-                rows = maxRows;
-            text.setAttribute('rows', rows + 1);
+            calculateNoteContentRows(text);
 
             let button = document.createElement('button');
             button.setAttribute('type', 'button');
@@ -167,7 +173,7 @@
                 }
             })
             .done(function(res) {
-                res.data = JSON.parse(res.data);
+                res.data = res.data;
                 console.log(res);
                 return res.data.id;
             })
@@ -209,6 +215,7 @@
             })
             .always(function(res) {
                 console.log(res);
+                afterSaveNote(noteID);
             });
         }
     </script>

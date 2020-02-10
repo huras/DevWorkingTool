@@ -33,9 +33,10 @@
 
 .workday-slot {
     margin-top: 8px;
+    margin-bottom: 32px;
 
     .head {
-        background-color: black;
+        background-color: rgb(38, 7, 105);
         display: flex;
         justify-content: flex-start;
         align-items: center;
@@ -55,7 +56,7 @@
                 border-radius: 5px;
 
                 &:hover {
-                    background-color: rgb(83, 83, 83);
+                    background-color: rgba(89, 52, 212, 0.698);
                 }
             }
 
@@ -80,12 +81,13 @@
     }
 
     .project-list {
-        margin-top: 8px;
+        padding-top: 8px;
 
         display: flex;
         align-items: center;
         justify-content: flex-start;
         flex-wrap: wrap;
+        background-color: rgba(138, 96, 255, 0.239);
 
         .workday-project {
             margin-bottom: 4px;
@@ -99,14 +101,73 @@
             background-color: transparent;
             transition: all ease-in 0.3s;
 
+            border-radius: 3px;
+
             img {
                 width: 35px;
                 margin-right: 8px;
             }
 
             &:hover {
-                background-color: rgb(219, 219, 219);
+                background-color: rgba(196, 179, 255, 0.342);
                 transition: all ease-in 0.3s;
+            }
+        }
+    }
+}
+
+.main-header{
+    background-color: rgb(118, 85, 190);
+    .nav-link{
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 4px;
+
+        .title{
+            color: white;
+        }
+    }
+
+    svg{
+        width: 35px;
+        margin-right: 8px;
+        transition: all 0.25s ease-in;
+        padding: 4px;
+        opacity: 0.7;
+
+        &.workday{
+            fill: rgb(255, 255, 255);
+        }
+
+        &.projects{
+            fill: rgb(255, 255, 255);
+        }
+
+        &.skills{
+            fill: rgb(255, 255, 255);
+        }
+    }
+
+    .nav-item:hover{
+        background-color: rgba(0, 0, 0, 0.178);
+        border-radius: 4px;
+        transition: all 0.1s ease-out;
+        svg{
+            width: 35px;
+            padding: 0px;
+            opacity: 1;
+
+            &.workday{
+                fill: rgb(236, 20, 89);
+            }
+
+            &.projects{
+                fill: rgb(20, 186, 236);
+            }
+
+            &.skills{
+                fill: rgb(236, 135, 20);
             }
         }
     }
