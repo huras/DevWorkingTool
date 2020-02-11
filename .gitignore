@@ -12,3 +12,6 @@ npm-debug.log
 yarn-error.log
 /package-lock.json
 .lock
+/public/mix-manifest.json
+/public/css/app.css
+!/storage/app/projects/*
