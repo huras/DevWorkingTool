@@ -14,4 +14,4 @@ yarn-error.log
 .lock
 /public/mix-manifest.json
 /public/css/app.css
-!/storage/app/projects/*
+!/storage/app/public/projects/*
