@@ -207,9 +207,29 @@
 
         padding: 0px 16px;
 
+        .wrapper{
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            width: 100%;
+
+            &.address{
+                color: rgb(22, 98, 221);
+            }
+
+            &.user{
+                color: rgb(60, 170, 16);
+            }
+
+            &.password{
+                color: rgb(177, 13, 13);
+            }
+        }
+
         input{
             width: 100%;
             border: 0;
+            padding-left: 4px;
 
             &.title{
                 font-weight: bold;

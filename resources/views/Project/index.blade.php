@@ -49,12 +49,20 @@
                         let accessSlot = document.createElement('div');
                         accessSlot.classList.add('access-slot');
 
+                        // Title
                         let title = document.createElement('input');
                         title.classList.add('title');
                         title.value = titleContent;
+                        accessSlot.appendChild(title);
 
+                        let addressWrapper = document.createElement('div');
                         let address = document.createElement('input');
-                        address.value = addressContent;
+                            address.value = addressContent;
+                        let addressTitle = document.createElement('div');
+                            addressTitle.innerHTML = 'Endereço: ';
+                        addressWrapper.appendChild(addressTitle);
+                        addressWrapper.appendChild(address);
+                        accessSlot.appendChild(addressWrapper);
 
                         let user = document.createElement('input');
                         user.value = userContent;
@@ -62,8 +70,8 @@
                         let password = document.createElement('input');
                         password.value = passwordContent;
 
-                        accessSlot.appendChild(title);
-                        accessSlot.appendChild(address);
+
+
                         accessSlot.appendChild(user);
                         accessSlot.appendChild(password);
 
