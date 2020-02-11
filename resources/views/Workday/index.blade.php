@@ -120,6 +120,9 @@
             title.onfocus = (event) => {
                 noteTitleOnclick(event);
             }
+            title.oninput = (event) => {
+                showSaveButton(newNoteID);
+            }
 
             let text = document.createElement('textarea');
             text.setAttribute('rows', 2);
@@ -151,9 +154,9 @@
             list.insertBefore(newNote, list.firstChild);
         }
 
-
         async function appendNewNote(workdayID){
-            let newNoteID = await createNote(workdayID);
+            const newNote = await createNote(workdayID);
+            const newNoteID = newNote.data.id;
 
             if(newNoteID != false){
                 insertNote(newNoteID);
@@ -175,7 +178,6 @@
             .done(function(res) {
                 res.data = res.data;
                 console.log(res);
-                return res.data.id;
             })
             .fail(function(res) {
                 console.log(res);
@@ -218,5 +220,31 @@
                 afterSaveNote(noteID);
             });
         }
+
+        function newWorkday(){
+
+        }
+
+        // Use tab to indent in textarea
+        window.addEventListener('load', () => {
+            $(document).delegate('textarea', 'keydown', function(e) {
+                var keyCode = e.keyCode || e.which;
+
+                if (keyCode == 9) {
+                    e.preventDefault();
+                    var start = this.selectionStart;
+                    var end = this.selectionEnd;
+
+                    // set textarea value to: text before caret + tab + text after caret
+                    $(this).val($(this).val().substring(0, start)
+                                + "\t"
+                                + $(this).val().substring(end));
+
+                    // put caret at right position again
+                    this.selectionStart =
+                    this.selectionEnd = start + 1;
+                }
+            });
+        });
     </script>
 @endsection

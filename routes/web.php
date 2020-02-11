@@ -28,3 +28,7 @@ Route::group(['prefix' => 'note'], function () {
     Route::post('/ajax/update', 'NoteController@updateNote')->name('note.update');
     Route::post('/ajax/store', 'NoteController@newWorkdaynote')->name('note.store');
 });
+
+Route::group(['prefix' => 'acesso'], function () {
+    Route::get('/projects', 'AcessoController@projects')->name('acesso.projects');
+});

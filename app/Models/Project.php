@@ -12,4 +12,9 @@ class Project extends Model
     {
         return $this->belongsToMany('App\Models\Workday');
     }
+
+    public function acessos()
+    {
+        return $this->belongsToMany('App\Models\Acesso');
+    }
 }
