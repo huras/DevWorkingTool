@@ -194,8 +194,8 @@
         }
 
         .logo{
-            width: 50px;
-            height: auto;
+            height: 50px;
+            width: auto;
         }
     }
 
@@ -234,6 +234,26 @@
             &.title{
                 font-weight: bold;
             }
+        }
+    }
+}
+
+#modal-associate-note-to-skill {
+    .img-flag {
+        width: 55px;
+    }
+
+    .select2-selection__choice {
+        display: flex;
+        flex-direction: column-reverse;
+        justify-content: center;
+        align-items: center;
+
+        .sl2-skill-slot{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
     }
 }

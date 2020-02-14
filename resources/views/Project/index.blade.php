@@ -30,7 +30,7 @@
                                     <script>
                                         window.addEventListener('load', function(){
                                             @foreach ($item->acessos as $acesso)
-                                                insertAccessSlot({{$acesso->id}}, '{{$modalID}}', '{{$acesso->title}}', '{{$acesso->address}}', '{{$acesso->user}}', '{{$acesso->password}}');
+                                                insertAccessSlot({{$acesso->id}}, {{$item->id}}, '{{$acesso->title}}', '{{$acesso->address}}', '{{$acesso->user}}', '{{$acesso->password}}');
                                             @endforeach
                                         });
                                     </script>
@@ -38,49 +38,77 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                                <button type="button" class="btn btn-primary">Salvar Mudanças</button>
+                                <button type="button" style='display: none;' class="btn btn-primary save-btn">Salvar Mudanças</button>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <script>
-                    function insertAccessSlot(accessID, modalID, titleContent = '[Novo acesso]', addressContent = '[Endereço]', userContent = '[Usuário]', passwordContent = '[Senha]'){
-                        let accessSlot = document.createElement('div');
-                        accessSlot.classList.add('access-slot');
-
-                        // Title
-                        let title = document.createElement('input');
-                        title.classList.add('title');
-                        title.value = titleContent;
-                        accessSlot.appendChild(title);
-
-                        let addressWrapper = document.createElement('div');
-                        let address = document.createElement('input');
-                            address.value = addressContent;
-                        let addressTitle = document.createElement('div');
-                            addressTitle.innerHTML = 'Endereço: ';
-                        addressWrapper.appendChild(addressTitle);
-                        addressWrapper.appendChild(address);
-                        accessSlot.appendChild(addressWrapper);
-
-                        let user = document.createElement('input');
-                        user.value = userContent;
-
-                        let password = document.createElement('input');
-                        password.value = passwordContent;
-
-
-
-                        accessSlot.appendChild(user);
-                        accessSlot.appendChild(password);
-
-                        let modalBody = document.querySelector('#'+modalID+' .modal-body');
-                        modalBody.appendChild(accessSlot);
-                    }
-                </script>
-
             </div>
         @endforeach
+        <script>
+            const modalPrefix = 'modal-acessos-';
+            let changeds = {};
+            function prepareToSaveAccess(accessID, projectID){
+                if(changeds.projectID == undefined){
+                    changeds.projectID = [];
+                }
+
+                changeds.projectID.push(accessID);
+            }
+
+            // Guarda só os ids
+            let changedAccesses = [];
+            function saveAllAccesses(){
+
+            }
+
+            function insertAccessSlot(accessID, projectID, titleContent = '[Novo acesso]', addressContent = '[Endereço]', userContent = '[Usuário]', passwordContent = '[Senha]'){
+                let accessSlot = document.createElement('div');
+                accessSlot.classList.add('access-slot');
+
+                // Title
+                let title = document.createElement('input');
+                title.classList.add('title');
+                title.value = titleContent;
+                accessSlot.appendChild(title);
+                title.addEventListener('input', function(){
+                    prepareToSaveAccess(accessID);
+                });
+
+                // Address
+                let addressWrapper = document.createElement('div');
+                let address = document.createElement('input');
+                    address.value = addressContent;
+                let addressTitle = document.createElement('div');
+                    addressTitle.innerHTML = 'Endereço: ';
+                addressWrapper.appendChild(addressTitle);
+                addressWrapper.appendChild(address);
+                accessSlot.appendChild(addressWrapper);
+                address.addEventListener('input', function(){
+                    prepareToSaveAccess(accessID);
+                });
+
+                // User
+                let user = document.createElement('input');
+                user.value = userContent;
+                user.addEventListener('input', function(){
+                    prepareToSaveAccess(accessID);
+                });
+
+                // Password
+                let password = document.createElement('input');
+                password.value = passwordContent;
+                password.addEventListener('input', function(){
+                    prepareToSaveAccess(accessID);
+                });
+
+                accessSlot.appendChild(user);
+                accessSlot.appendChild(password);
+
+                let modalID = modalPrefix+projectID;
+                let modalBody = document.querySelector('#'+modalID+' .modal-body');
+                modalBody.appendChild(accessSlot);
+            }
+        </script>
     </div>
 @endsection

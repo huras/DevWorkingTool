@@ -8,6 +8,9 @@ class Workday extends Model
 {
     protected $table = 'workdays';
 
+    public $fillable = ['date'];
+    public $timestamps = false;
+
     public function projects()
     {
         return $this->belongsToMany('App\Models\Project');

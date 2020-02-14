@@ -1,6 +1,7 @@
 @extends('Layout.default')
 
 @section('content')
+
     <?php
         $meses = [
             '01' => 'Janeiro',
@@ -19,6 +20,13 @@
     ?>
 
     <div class='container'>
+        <div style='margin-top: 8px;'>
+            <form action="{{route('workday.store')}}">
+                <input type="date" name='date'>
+                <input type="submit" value='Novo Workday'>
+            </form>
+        </div>
+
         <?php $isFirstWorkDay = true; ?>
         @foreach ($workdays as $workday)
             <div class='workday-slot' workday-slot='id{{$workday->id}}' id='workday-{{$workday->id}}'>
@@ -78,7 +86,80 @@
         @endforeach
     </div>
 
+     <!-- Modal -->
+    <?php $modalID = 'modal-associate-note-to-skill' ?>
+    <div class="modal fade" id="{{$modalID}}" tabindex="-1" role="dialog" aria-labelledby="{{$modalID}}Label" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="{{$modalID}}Label"> Associar nota à skill </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" value="" id='note-assoc-id'>
+                    <select class="js-example-basic-single w-100" name="state" multiple="multiple" onchange='document.getElementById("salvar-skill-assoc").style.display = "flex"'>
+                        @foreach($skills as $skill)
+                            <option title='{{$skill->icon}}' value="{{$skill->id}}"> {{$skill->name}} </option>
+                        @endforeach
+                    </select>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                    <button onclick="saveNoteSkillAssociations();" type="button" style='display: none;' id='salvar-skill-assoc' class="btn btn-primary save-btn">Salvar Mudanças</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
+        window.addEventListener('load', () => {
+            function formatSkillState(state){
+                if(!state.id){
+                    return state.text;
+                }
+
+                var imgUrl = "/storage/skills/"+state.title;
+                var $state = $('<span class="sl2-skill-slot"> <img class="img-flag" /> <span> </span> </span>');
+
+                $state.find("span").text(state.text);
+                $state.find("img").attr("src", imgUrl);
+
+                return $state;
+            }
+
+            $('.js-example-basic-single').select2({
+                width: '100%',
+                templateSelection: formatSkillState
+            });
+        });
+
+        function saveNoteSkillAssociations() {
+            var selected = [];
+            $('.js-example-basic-single :selected').each(function() {
+                selected[$(this).val()] = $(this).text();
+            });
+
+            let noteID = document.querySelector('#note-assoc-id').value = newNoteID;
+            console.log(selected);
+
+            $.ajax({
+                type: "POST",
+                url: "/note/ajax/update",
+                data: {
+                    laboratorios: selected
+                },
+                cache: true,
+
+                success: function(data) {
+                    console.log(data);
+                }
+
+            });
+        }
+
         function afterSaveNote(noteID){
             let textarea = document.getElementById('note-content-'+noteID);
             calculateNoteContentRows(textarea);
@@ -138,18 +219,30 @@
             }
             calculateNoteContentRows(text);
 
-            let button = document.createElement('button');
-            button.setAttribute('type', 'button');
-            button.innerHTML = 'Salvar';
-            button.setAttribute('id', 'btn-salvar-'+newNoteID);
-            button.style.display = 'none';
-            button.onclick = (event) => {
+            let btnSalvar = document.createElement('button');
+            btnSalvar.setAttribute('type', 'button');
+            btnSalvar.innerHTML = 'Salvar';
+            btnSalvar.setAttribute('id', 'btn-salvar-'+newNoteID);
+            btnSalvar.style.display = 'none';
+            btnSalvar.onclick = (event) => {
                 updateNote(event, newNoteID);
+            }
+
+            let btnAssociateToSkill = document.createElement('button');
+            btnAssociateToSkill.setAttribute('type', 'button');
+            btnAssociateToSkill.innerHTML = 'Associar skill';
+            btnAssociateToSkill.setAttribute('id', 'btn-assoc-skill-'+newNoteID);
+            btnAssociateToSkill.onclick = (event) => {
+                let modal = document.getElementById('modal-associate-note-to-skill');
+                modal.querySelector('#note-assoc-id').value = newNoteID;
+                $('#modal-associate-note-to-skill').modal('show');
             }
 
             newNote.appendChild(title);
             newNote.appendChild(text);
-            newNote.appendChild(button);
+            newNote.appendChild(btnAssociateToSkill);
+            newNote.appendChild(btnSalvar);
+
 
             list.insertBefore(newNote, list.firstChild);
         }

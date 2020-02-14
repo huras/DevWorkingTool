@@ -14,6 +14,7 @@ Route::get('/', 'WorkdayController@index');
 
 Route::group(['prefix' => 'workday'], function () {
     Route::get('/', 'WorkdayController@index')->name('workday.list');
+    Route::get('/store', 'WorkdayController@store')->name('workday.store');
 });
 
 Route::group(['prefix' => 'project'], function () {
@@ -27,6 +28,7 @@ Route::group(['prefix' => 'skill'], function () {
 Route::group(['prefix' => 'note'], function () {
     Route::post('/ajax/update', 'NoteController@updateNote')->name('note.update');
     Route::post('/ajax/store', 'NoteController@newWorkdaynote')->name('note.store');
+    // Route::post('/ajax/update', 'NoteController@updateAjax')->name('note.update');
 });
 
 Route::group(['prefix' => 'acesso'], function () {

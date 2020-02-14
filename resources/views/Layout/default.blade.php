@@ -11,6 +11,7 @@
     <title> @yield('title') </title>
 
     <link rel="stylesheet" href="{{asset('css/bootstrap.css')}}">
+    <link rel="stylesheet" href="{{asset('css/select2.min.css')}}">
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
 </head>
 <body>
@@ -24,5 +25,6 @@
     <script src="{{ asset('js/jquery.min.js') }}" defer></script>
     <script src="{{ asset('js/popper.min.js') }}" defer></script>
     <script src="{{ asset('js/bootstrap.min.js') }}" defer></script>
+    <script src="{{ asset('js/select2.min.js') }}" defer></script>
 </body>
 </html>
