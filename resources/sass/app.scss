@@ -116,20 +116,20 @@
     }
 }
 
-.main-header{
+.main-header {
     background-color: rgb(118, 85, 190);
-    .nav-link{
+    .nav-link {
         display: flex;
         justify-content: flex-start;
         align-items: center;
         padding: 4px;
 
-        .title{
+        .title {
             color: white;
         }
     }
 
-    svg{
+    svg {
         width: 35px;
         margin-right: 8px;
         transition: all 0.25s ease-in;
@@ -139,43 +139,43 @@
         fill: rgb(255, 255, 255);
     }
 
-    .nav-item:hover{
+    .nav-item:hover {
         background-color: rgba(0, 0, 0, 0.178);
         border-radius: 4px;
         transition: all 0.1s ease-out;
-        svg{
+        svg {
             width: 35px;
             padding: 0px;
             opacity: 1;
 
-            &.workday{
+            &.workday {
                 fill: rgb(236, 20, 89);
             }
 
-            &.projects{
+            &.projects {
                 fill: rgb(20, 186, 236);
             }
 
-            &.skills{
+            &.skills {
                 fill: rgb(236, 171, 20);
             }
 
-            &.acessos{
+            &.acessos {
                 fill: rgb(20, 236, 38);
             }
         }
     }
 }
 
-.project-list{
+.project-list {
     display: flex;
     flex-wrap: wrap;
 
-    .slot{
+    .slot {
         margin-top: 8px;
         margin-left: 8px;
 
-        .head{
+        .head {
             padding: 8px;
             border-radius: 4px;
             background-color: rgba(107, 43, 226, 0.144);
@@ -187,19 +187,19 @@
             align-items: center;
             justify-content: center;
 
-            &:hover{
+            &:hover {
                 background-color: rgba(187, 151, 255, 0.616);
                 transition: all 0.1 ease-in;
             }
         }
 
-        .logo{
+        .logo {
             height: 50px;
             width: auto;
         }
     }
 
-    .access-slot{
+    .access-slot {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
@@ -207,31 +207,31 @@
 
         padding: 0px 16px;
 
-        .wrapper{
+        .wrapper {
             display: flex;
             justify-content: flex-start;
             align-items: center;
             width: 100%;
 
-            &.address{
+            &.address {
                 color: rgb(22, 98, 221);
             }
 
-            &.user{
+            &.user {
                 color: rgb(60, 170, 16);
             }
 
-            &.password{
+            &.password {
                 color: rgb(177, 13, 13);
             }
         }
 
-        input{
+        input {
             width: 100%;
             border: 0;
             padding-left: 4px;
 
-            &.title{
+            &.title {
                 font-weight: bold;
             }
         }
@@ -249,11 +249,101 @@
         justify-content: center;
         align-items: center;
 
-        .sl2-skill-slot{
+        .sl2-skill-slot {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+        }
+    }
+}
+
+.skill-listing {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+
+    padding: 8px;
+
+    .slot {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-right: 16px;
+        margin-top: 16px;
+        cursor: pointer;
+
+        .icone {
+            border-radius: 4px;
+            height: 64px;
+            width: auto;
+            padding: 4px;
+            transition: all 0.35s ease-in;
+        }
+
+        .titulo {
+            margin-top: 2px;
+            transition: all 0.35s ease-in;
+        }
+
+        padding-bottom: 8px;
+        transition: all 0.35s ease-in;
+        &:hover {
+            padding-bottom: 4px;
+            transition: all 0.2s ease-out;
+
+            .icone {
+                padding: 0px;
+                transition: all 0.2s ease-out;
+            }
+
+            .titulo {
+                margin-top: 6px;
+                transition: all 0.2s ease-out;
+            }
+        }
+    }
+}
+
+.skill-modal {
+    .modal-dialog {
+        max-width: 1000px !important;
+    }
+
+    .modal-header {
+        align-items: center;
+        .title-icon {
+            margin-right: 16px;
+            height: 40px;
+            width: auto;
+        }
+    }
+
+    .modal-body {
+        .note-slot {
+            margin-top: 8px;
+
+            .note-title {
+                width: 100%;
+                text-align: center;
+                font-weight: bold;
+                border: 0;
+            }
+            .note-content {
+                margin-top: 4px;
+                width: 100%;
+                border: 0;
+            }
+        }
+    }
+
+    .modal-footer {
+        .page-icon {
+            fill: white;
+            height: 25px;
+            width: auto;
         }
     }
 }
