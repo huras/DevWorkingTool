@@ -156,7 +156,6 @@
                 success: function(data) {
                     console.log(data);
                 }
-
             });
         }
 
@@ -164,12 +163,14 @@
             let textarea = document.getElementById('note-content-'+noteID);
             calculateNoteContentRows(textarea);
         }
+
         function noteTitleOnclick(e){
             let input = e.target;
             if(input.value == '[New Note]'){
                 input.select();
             }
         }
+
         function notecontetOnclick(e){
             let input = e.target;
             if(input.value == '[empty]\n'){

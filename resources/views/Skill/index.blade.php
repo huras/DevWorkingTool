@@ -48,7 +48,7 @@
                             },
                         @endforeach
                     ];
-                    skill = new Skill('{{$skill->name}}', '{{$skill->icon}}', notes);
+                    skill = new Skill({{$skill->id}}, '{{$skill->name}}', '{{$skill->icon}}', notes);
                     insertSkillSlot(skill);
                 @endforeach
             </script>

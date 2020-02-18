@@ -1,12 +1,27 @@
 class Skill {
-    constructor(name, icon, notes) {
+    constructor(id, name, icon, notes = []) {
+        this.id = id;
         this.name = name;
         this.icon = icon;
         this.notes = notes;
     }
+
+    static async getSkillDetails(id){
+        return $.ajax({
+            method: 'GET',
+            url: '/skill/ajax/get',
+            data: {
+                id: id
+            }
+        }).always(function(res){
+            // console.log(res);
+        });
+    }
 }
 
-function openSkillInModal(skill) {
+async function openSkillInModal(skill) {
+    console.log(await Skill.getSkillDetails(skill.id));
+
     let modal = document.getElementById("skill-modal");
     let title = modal.querySelector(".modal-title");
     title.innerHTML = skill.name;
@@ -18,7 +33,7 @@ function openSkillInModal(skill) {
     body.innerHTML = "";
 
     skill.notes.map(item => {
-        let note = new Note(item.title, item.content);
+        let note = new Note(item.title, item.content, item.id);
         let newSlot = note.createSlot();
         body.appendChild(newSlot);
     });

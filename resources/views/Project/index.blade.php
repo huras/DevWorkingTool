@@ -6,7 +6,11 @@
             <?php $modalID = 'modal-acessos-'.$item->id ?>
             <div class='slot'>
                 <div class='head' onclick="$('#{{$modalID}}').modal('show');">
-                    <img class='logo' src="{{asset('/storage/projects/'.$item->icon)}}" alt="">
+                    @if(strpos($item->icon ,'://'))
+                        <img class='logo' src="{{$item->icon}}" alt="">
+                    @else
+                        <img class='logo' src="{{asset('/storage/projects/'.$item->icon)}}" alt="">
+                    @endif
                     <div>{{$item->name}}</div>
                     <div class='acoes'>
                         <span class='acessos'>

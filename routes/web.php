@@ -23,6 +23,7 @@ Route::group(['prefix' => 'project'], function () {
 
 Route::group(['prefix' => 'skill'], function () {
     Route::get('/', 'SkillController@index')->name('skill.list');
+    Route::get('/ajax/get', 'SkillController@getDetails')->name('note.get');
 });
 
 Route::group(['prefix' => 'note'], function () {
