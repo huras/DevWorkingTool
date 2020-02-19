@@ -17,6 +17,19 @@ class Skill {
             // console.log(res);
         });
     }
+
+    buildMenuFromNotes(){
+        let menu = document.createElement('div');
+        this.notes.map(note => {
+            if(note.title != ''){
+                let item = document.createElement('a');
+                item.classList.add('w-100');
+                item.innerHTML = note.title;
+                menu.appendChild(item);
+            }
+        })
+        return menu;
+    }
 }
 
 async function openSkillInModal(skill) {
@@ -32,6 +45,7 @@ async function openSkillInModal(skill) {
     let body = modal.querySelector(".modal-body");
     body.innerHTML = "";
 
+    body.appendChild(skill.buildMenuFromNotes());
     skill.notes.map(item => {
         let note = new Note(item.title, item.content, item.id);
         let newSlot = note.createSlot();
