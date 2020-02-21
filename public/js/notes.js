@@ -129,6 +129,7 @@ class Note {
         noteSlot.appendChild(noteTitle);
         noteSlot.appendChild(noteContent);
         noteSlot.appendChild(btnSalvar);
+        noteSlot.id = 'note-'+this.id;
 
         return noteSlot;
     }

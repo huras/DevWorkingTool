@@ -322,6 +322,47 @@
     }
 
     .modal-body {
+        .title-index{
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+
+            border-bottom: 1px solid #85878a;
+            padding: 8px 4px;
+
+            .slot{
+                margin-top: 4px;
+                padding: 2px 2px;
+                cursor: pointer;
+                transition: all 0.3s ease-in;
+
+                .title{
+
+                }
+                .icon{
+                    width: auto;
+                    height: 15px;
+
+                    margin-right: 4px;
+                }
+
+                &:hover{
+                    text-decoration: none;
+                    transition: all 0.15s ease-out;
+
+                    background: rgba(247,251,253,1);
+                    background: -moz-linear-gradient(top, rgba(247,251,253,1) 0%, rgba(79,196,232,1) 10%, rgba(177,228,246,1) 24%, rgba(177,228,246,1) 77%, rgba(79,196,232,1) 87%, rgba(247,251,253,1) 100%);
+                    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(247,251,253,1)), color-stop(10%, rgba(79,196,232,1)), color-stop(24%, rgba(177,228,246,1)), color-stop(77%, rgba(177,228,246,1)), color-stop(87%, rgba(79,196,232,1)), color-stop(100%, rgba(247,251,253,1)));
+                    background: -webkit-linear-gradient(top, rgba(247,251,253,1) 0%, rgba(79,196,232,1) 10%, rgba(177,228,246,1) 24%, rgba(177,228,246,1) 77%, rgba(79,196,232,1) 87%, rgba(247,251,253,1) 100%);
+                    background: -o-linear-gradient(top, rgba(247,251,253,1) 0%, rgba(79,196,232,1) 10%, rgba(177,228,246,1) 24%, rgba(177,228,246,1) 77%, rgba(79,196,232,1) 87%, rgba(247,251,253,1) 100%);
+                    background: -ms-linear-gradient(top, rgba(247,251,253,1) 0%, rgba(79,196,232,1) 10%, rgba(177,228,246,1) 24%, rgba(177,228,246,1) 77%, rgba(79,196,232,1) 87%, rgba(247,251,253,1) 100%);
+                    background: linear-gradient(to bottom, rgba(247,251,253,1) 0%, rgba(79,196,232,1) 10%, rgba(177,228,246,1) 24%, rgba(177,228,246,1) 77%, rgba(79,196,232,1) 87%, rgba(247,251,253,1) 100%);
+                    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f7fbfd', endColorstr='#f7fbfd', GradientType=0 );
+                }
+            }
+        }
+
         .note-slot {
             margin-top: 8px;
 
@@ -335,6 +376,16 @@
                 margin-top: 4px;
                 width: 100%;
                 border: 0;
+                padding-bottom: 4px;
+                border-bottom: 1px solid #85878a;
+            }
+
+            transition: all 0.3s ease-in;
+            box-shadow: #ff8d00 0px 0px 0px 0px;
+
+            &.highlited{
+                transition: all 0.15s ease-out;
+                box-shadow: #ff8d00 0px 5px 14px 0px;
             }
         }
     }
@@ -344,38 +395,44 @@
         align-items: center;
         justify-content: space-between;
 
-        .actions{
-            button{
-                padding: 4px 8px;
-                border: 0;
-                background-color: rgb(230, 227, 227);
-                border-radius: 5px;
-
-                svg{
-                    height: 25px;
-                    width: auto;
-                    padding: 2px;
-                    transition: all ease-in 0.25s;
-
-                    &.new-note{
-                        fill: #28a745;
-                    }
-                }
-
-                &:hover{
-
-                    svg{
-                        padding: 0;
-                        transition: all ease-in 0.15s;
-                    }
-                }
-            }
-        }
-
         .page-icon {
             fill: white;
             height: 25px;
             width: auto;
         }
+    }
+
+    .modal-footer .actions, .modal-actions{
+        button{
+            padding: 4px 8px;
+            border: 0;
+            background-color: rgb(230, 227, 227);
+            border-radius: 5px;
+            margin-right: 4px;
+
+            svg{
+                height: 25px;
+                width: auto;
+                padding: 2px;
+                transition: all ease-in 0.25s;
+                fill: rgb(140, 87, 253);
+            }
+
+            &:hover{
+
+                svg{
+                    padding: 0;
+                    transition: all ease-in 0.15s;
+                }
+            }
+        }
+    }
+
+    .modal-actions{
+        padding: 1rem 1rem;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        border-bottom: 1px solid #85878a;
     }
 }

@@ -20,11 +20,33 @@ class Skill {
 
     buildMenuFromNotes(){
         let menu = document.createElement('div');
+        menu.classList.add('title-index')
         this.notes.map(note => {
             if(note.title != ''){
+                let icon = document.createElement('img');
+                icon.src = this.icon;
+                icon.classList.add('icon');
+
+                let title = document.createElement('span');
+                title.innerHTML = note.title;
+                title.classList.add('title');
+
                 let item = document.createElement('a');
+                item.classList.add('slot');
                 item.classList.add('w-100');
-                item.innerHTML = note.title;
+                const noteID = '#note-'+note.id;
+                item.href = noteID;
+                item.onclick = () => {
+                    let noteSlot = document.querySelector(noteID);
+                    noteSlot.classList.add('highlited');
+
+                    setTimeout(() => {
+                        noteSlot.classList.remove('highlited');
+                    }, 1500);
+                };
+                item.appendChild(icon);
+                item.appendChild(title);
+
                 menu.appendChild(item);
             }
         })
