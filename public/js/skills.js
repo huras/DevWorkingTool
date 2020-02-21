@@ -30,10 +30,23 @@ class Skill {
         })
         return menu;
     }
+
+    // Notes
+    async newNote(){
+        const newNoteRes = await Note.createNoteForSkill(this.id);
+        const newNoteData = newNoteRes.data;
+        let note = new Note(newNoteData.title, newNoteData.content, newNoteData.id);
+        this.notes.push(note);
+        return note;
+    }
 }
 
 async function openSkillInModal(skill) {
-    console.log(await Skill.getSkillDetails(skill.id));
+    // let updatedSkill = await Skill.getSkillDetails(skill.id);
+    // console(updatedSkill);
+    // if(updatedSkill){
+    //     // skill = new Skill(updatedSkill)
+    // }
 
     let modal = document.getElementById("skill-modal");
     let title = modal.querySelector(".modal-title");
@@ -44,6 +57,13 @@ async function openSkillInModal(skill) {
 
     let body = modal.querySelector(".modal-body");
     body.innerHTML = "";
+
+    let newNoteBtn = modal.querySelector('.new-note-btn');
+    newNoteBtn.onclick = async () => {
+        let newNote = await skill.newNote();
+        let newSlot = newNote.createSlot();
+        body.appendChild(newSlot);
+    };
 
     body.appendChild(skill.buildMenuFromNotes());
     skill.notes.map(item => {

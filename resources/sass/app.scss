@@ -340,6 +340,38 @@
     }
 
     .modal-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .actions{
+            button{
+                padding: 4px 8px;
+                border: 0;
+                background-color: rgb(230, 227, 227);
+                border-radius: 5px;
+
+                svg{
+                    height: 25px;
+                    width: auto;
+                    padding: 2px;
+                    transition: all ease-in 0.25s;
+
+                    &.new-note{
+                        fill: #28a745;
+                    }
+                }
+
+                &:hover{
+
+                    svg{
+                        padding: 0;
+                        transition: all ease-in 0.15s;
+                    }
+                }
+            }
+        }
+
         .page-icon {
             fill: white;
             height: 25px;

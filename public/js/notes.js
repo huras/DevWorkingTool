@@ -5,6 +5,8 @@ class Note {
         this.content = content;
     }
 
+
+
     calculateNoteContentRows(textarea) {
         let maxRows = 30;
         var rows = (textarea.value.match(/\n/g) || []).length;
@@ -34,14 +36,14 @@ class Note {
                 _token: token
             }
         })
-        .done(function(res) {
+        .done((res) => {
             console.log(res);
             e.target.style.display = 'none';
         })
-        .fail(function(res) {
+        .fail((res) => {
             console.log(res);
         })
-        .always(function(res) {
+        .always((res) => {
             console.log(res);
             this.afterSaveNote(noteID);
         });
@@ -131,12 +133,12 @@ class Note {
         return noteSlot;
     }
 
-    async createNoteForWorkday(workdayID){
+    static async createNoteForWorkday(workdayID){
         let token = $('meta[name="csrf-token"]').attr("content");
         var baseurl = window.location.origin;
 
         return $.ajax({
-            url: baseurl + "/note/ajax/store",
+            url: baseurl + "/note/ajax/store/workday",
             type: "POST",
             data: {
                 id: workdayID,
@@ -156,5 +158,33 @@ class Note {
         });
 
         return false;
+    }
+
+    static async createNoteForSkill(skillID){
+        let token = $('meta[name="csrf-token"]').attr("content");
+        var baseurl = window.location.origin;
+
+        let retorno = $.ajax({
+            url: baseurl + "/note/ajax/store/skill",
+            type: "POST",
+            data: {
+                id: skillID,
+                _token: token
+            }
+        })
+        .done(function(res) {
+            res.data = res.data;
+            console.log(res);
+        })
+        .fail(function(res) {
+            console.log(res);
+            return false;
+        })
+        .always(function(res) {
+            console.log(res);
+        });
+
+        console.log(retorno);
+        return retorno;
     }
 }

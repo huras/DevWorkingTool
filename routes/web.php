@@ -28,7 +28,7 @@ Route::group(['prefix' => 'skill'], function () {
 
 Route::group(['prefix' => 'note'], function () {
     Route::post('/ajax/update', 'NoteController@updateNote')->name('note.update');
-    Route::post('/ajax/store', 'NoteController@newWorkdaynote')->name('note.store');
+    Route::post('/ajax/store/{type}', 'NoteController@newNote')->name('note.store');
     // Route::post('/ajax/update', 'NoteController@updateAjax')->name('note.update');
 });
 

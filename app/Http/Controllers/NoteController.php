@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Models\Note;
 use App\Models\Workday;
+use App\Models\Skill;
 
 class NoteController extends Controller
 {
@@ -22,7 +23,7 @@ class NoteController extends Controller
         ]);
     }
 
-    public function newWorkdaynote(Request $request){
+    public function newNote(Request $request, $type){
         //Create note
         $note = new Note;
         $note->title = '[New Note]';
@@ -30,8 +31,20 @@ class NoteController extends Controller
         $note->save();
 
         //Links note to workday's id inside the request
-        $workday = Workday::find($request->id);
-        $note->workdays()->save($workday);
+        switch ($type) {
+            case 'workday':
+                    $workday = Workday::find($request->id);
+                    $note->workdays()->save($workday);
+                break;
+            case 'skill':
+                    $skill = Skill::find($request->id);
+                    $note->skills()->save($skill);
+                break;
+
+            default:
+                # code...
+                break;
+        }
 
         //Sends the note id back to the request sender
         return response()->json([
