@@ -1,8 +1,33 @@
 class Block {
-    constructor(id, title, notes) {
+    constructor(id, title, notes = []) {
         this.id = id;
         this.title = title;
-        this.notes = notes;
+        if (notes != []) {
+            this.notes = [];
+            notes.map(note => {
+                this.notes.push(new Note(note.title, note.content, note.id));
+            });
+        } else {
+            this.notes = notes;
+        }
+    }
+
+    createSlot() {
+        let slot = document.createElement("div");
+
+        let title = document.createElement("div");
+        title.innerHTML = this.title;
+        slot.appendChild(title);
+
+        this.notes.map(item => {
+            let note = new Note(item.title, item.content, item.id);
+            let newSlot = note.createSlot();
+            slot.appendChild(newSlot);
+        });
+
+        slot.classList.add("block-slot");
+        slot.id = "block-" + this.id;
+        return slot;
     }
 
     static async createBlock(id, relationship) {

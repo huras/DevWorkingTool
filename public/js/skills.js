@@ -19,9 +19,39 @@ class Skill {
         });
     }
 
-    buildMenuFromNotes() {
+    buildMenu() {
         let menu = document.createElement("div");
         menu.classList.add("title-index");
+        this.blocks.map(block => {
+            if (block.title != "") {
+                let icon = document.createElement("img");
+                icon.src = this.icon;
+                icon.classList.add("icon");
+
+                let title = document.createElement("span");
+                title.innerHTML = block.title;
+                title.classList.add("title");
+
+                let item = document.createElement("a");
+                item.classList.add("slot");
+                item.classList.add("w-100");
+                const blockID = "#block-" + block.id;
+                item.href = blockID;
+                item.onclick = () => {
+                    let blockSlot = document.querySelector(blockID);
+                    blockSlot.classList.add("highlited");
+
+                    setTimeout(() => {
+                        blockSlot.classList.remove("highlited");
+                    }, 1500);
+                };
+                item.appendChild(icon);
+                item.appendChild(title);
+
+                menu.appendChild(item);
+            }
+        });
+
         this.notes.map(note => {
             if (note.title != "") {
                 let icon = document.createElement("img");
@@ -82,7 +112,6 @@ class Skill {
             method: "get",
             url: "/skill/ajax/fetchAll/" + this.id
         }).always(res => {
-            console.log(res);
             if (!res.error) {
                 const data = res.data;
                 this.name = data.name;
@@ -96,10 +125,9 @@ class Skill {
                 this.blocks = [];
                 data.blocks.map(block => {
                     this.blocks.push(
-                        new Block(block.id, block.title, block.content)
+                        new Block(block.id, block.title, block.notes)
                     );
                 });
-                console.log(this);
             }
         });
     }
@@ -107,7 +135,6 @@ class Skill {
 
 async function openSkillInModal(skill) {
     await skill.fetchAll();
-    console.log(skill);
 
     let modal = document.getElementById("skill-modal");
     let title = modal.querySelector(".modal-title");
@@ -133,10 +160,15 @@ async function openSkillInModal(skill) {
         body.appendChild(newSlot);
     };
 
-    body.appendChild(skill.buildMenuFromNotes());
+    body.appendChild(skill.buildMenu());
     skill.notes.map(item => {
         let note = new Note(item.title, item.content, item.id);
         let newSlot = note.createSlot();
+        body.appendChild(newSlot);
+    });
+    skill.blocks.map(item => {
+        let block = new Block(item.id, item.title, item.notes);
+        let newSlot = block.createSlot();
         body.appendChild(newSlot);
     });
 
