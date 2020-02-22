@@ -23,7 +23,13 @@ Route::group(['prefix' => 'project'], function () {
 
 Route::group(['prefix' => 'skill'], function () {
     Route::get('/', 'SkillController@index')->name('skill.list');
-    Route::get('/ajax/get', 'SkillController@getDetails')->name('note.get');
+    Route::get('/ajax/fetchAll/{id}', 'SkillController@fetchAll')->name('skill.fetchAll');
+    Route::post('/store', 'SkillController@store')->name('skill.store');
+});
+
+Route::group(['prefix' => 'block'], function () {
+    // Route::post('/ajax/update', 'NoteController@updateNote')->name('note.update');
+    Route::post('/ajax/store/{relationship}', 'BlockController@new');
 });
 
 Route::group(['prefix' => 'note'], function () {

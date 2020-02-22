@@ -2,7 +2,34 @@
 
 @section('content')
     <script src="{{asset('/js/notes.js')}}"></script>
+    <script src="{{asset('/js/blocks.js')}}"></script>
     <script src="{{asset('/js/skills.js')}}"></script>
+
+    <form action="{{route('skill.store')}}" method='POST' enctype="multipart/form-data">
+        @csrf
+        <label for="">Nome:
+            <input type="text" name='name' value='{{old('name')}}'>
+            @error('name')
+                <span class='text-danger'>{{ $message }}</span>
+            @enderror
+        </label>
+        <div>
+            <label for="">Icone Arquivo:
+                <input type="file" name='icon' value='{{old('icon')}}'>
+            </label>
+            @error('icon')
+                <span class='text-danger'>{{ $message }}</span>
+            @enderror
+            <div>ou</div>
+            <label for="">Icone url:
+                <input type="text" name='icon-url' value='{{old('icon-url')}}'>
+            </label>
+            @error('icon-url')
+                <span class='text-danger'>{{ $message }}</span>
+            @enderror
+        </div>
+        <input type="submit">
+    </form>
 
     <!-- Skill Modal -->
     <?php $skillModalID = 'skill-modal' ?>
@@ -67,16 +94,7 @@
             <script>
                 let skill = null, notes = [];
                 @foreach ($skills as $skill)
-                    notes = [
-                        @foreach($skill->notes as $note)
-                            {
-                                id: {{$note->id}},
-                                title: `{{$note->title}}`,
-                                content: `{{$note->content}}`,
-                            },
-                        @endforeach
-                    ];
-                    skill = new Skill({{$skill->id}}, '{{$skill->name}}', '{{$skill->icon}}', notes);
+                    skill = new Skill({{$skill->id}}, '{{$skill->name}}', '{{$skill->icon}}');
                     insertSkillSlot(skill);
                 @endforeach
             </script>

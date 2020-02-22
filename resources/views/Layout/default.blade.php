@@ -15,14 +15,15 @@
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
 </head>
 <body>
+    <script src="{{ asset('js/jquery.min.js') }}" defer></script>
 
+    @include('components.alert')
     @include('components.header')
     @yield('content')
     @include('components.footer')
 
     {{-- Scripts --}}
     {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
-    <script src="{{ asset('js/jquery.min.js') }}" defer></script>
     <script src="{{ asset('js/popper.min.js') }}" defer></script>
     <script src="{{ asset('js/bootstrap.min.js') }}" defer></script>
     <script src="{{ asset('js/select2.min.js') }}" defer></script>
