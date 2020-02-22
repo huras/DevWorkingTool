@@ -15,8 +15,9 @@ class Block {
     createSlot() {
         let slot = document.createElement("div");
 
-        let title = document.createElement("div");
-        title.innerHTML = this.title;
+        let title = document.createElement("input");
+        title.value = this.title;
+        title.classList.add("title");
         slot.appendChild(title);
 
         this.notes.map(item => {
