@@ -1,47 +1,48 @@
 class Skill {
-    constructor(id, name, icon, notes = []) {
+    constructor(id, name, icon, notes = [], blocks = []) {
         this.id = id;
         this.name = name;
         this.icon = icon;
         this.notes = notes;
+        this.blocks = blocks;
     }
 
-    static async getSkillDetails(id){
+    static async getSkillDetails(id) {
         return $.ajax({
-            method: 'GET',
-            url: '/skill/ajax/get',
+            method: "GET",
+            url: "/skill/ajax/get",
             data: {
                 id: id
             }
-        }).always(function(res){
+        }).always(function(res) {
             // console.log(res);
         });
     }
 
-    buildMenuFromNotes(){
-        let menu = document.createElement('div');
-        menu.classList.add('title-index')
+    buildMenuFromNotes() {
+        let menu = document.createElement("div");
+        menu.classList.add("title-index");
         this.notes.map(note => {
-            if(note.title != ''){
-                let icon = document.createElement('img');
+            if (note.title != "") {
+                let icon = document.createElement("img");
                 icon.src = this.icon;
-                icon.classList.add('icon');
+                icon.classList.add("icon");
 
-                let title = document.createElement('span');
+                let title = document.createElement("span");
                 title.innerHTML = note.title;
-                title.classList.add('title');
+                title.classList.add("title");
 
-                let item = document.createElement('a');
-                item.classList.add('slot');
-                item.classList.add('w-100');
-                const noteID = '#note-'+note.id;
+                let item = document.createElement("a");
+                item.classList.add("slot");
+                item.classList.add("w-100");
+                const noteID = "#note-" + note.id;
                 item.href = noteID;
                 item.onclick = () => {
                     let noteSlot = document.querySelector(noteID);
-                    noteSlot.classList.add('highlited');
+                    noteSlot.classList.add("highlited");
 
                     setTimeout(() => {
-                        noteSlot.classList.remove('highlited');
+                        noteSlot.classList.remove("highlited");
                     }, 1500);
                 };
                 item.appendChild(icon);
@@ -49,26 +50,64 @@ class Skill {
 
                 menu.appendChild(item);
             }
-        })
+        });
         return menu;
     }
 
     // Notes
-    async newNote(){
+    async newNote() {
         const newNoteRes = await Note.createNoteForSkill(this.id);
         const newNoteData = newNoteRes.data;
-        let note = new Note(newNoteData.title, newNoteData.content, newNoteData.id);
+        let note = new Note(
+            newNoteData.title,
+            newNoteData.content,
+            newNoteData.id
+        );
         this.notes.push(note);
         return note;
+    }
+
+    // Blocks
+    async newBlock() {
+        const res = await Block.createBlock(this.id, "skill");
+        console.log(res);
+    }
+
+    async fetchBlocks() {}
+
+    async fetchNotes() {}
+
+    async fetchAll() {
+        await $.ajax({
+            method: "get",
+            url: "/skill/ajax/fetchAll/" + this.id
+        }).always(res => {
+            console.log(res);
+            if (!res.error) {
+                const data = res.data;
+                this.name = data.name;
+                this.icon = data.icon;
+                this.notes = [];
+                data.notes.map(note => {
+                    this.notes.push(
+                        new Note(note.title, note.content, note.id)
+                    );
+                });
+                this.blocks = [];
+                data.blocks.map(block => {
+                    this.blocks.push(
+                        new Block(block.id, block.title, block.content)
+                    );
+                });
+                console.log(this);
+            }
+        });
     }
 }
 
 async function openSkillInModal(skill) {
-    // let updatedSkill = await Skill.getSkillDetails(skill.id);
-    // console(updatedSkill);
-    // if(updatedSkill){
-    //     // skill = new Skill(updatedSkill)
-    // }
+    await skill.fetchAll();
+    console.log(skill);
 
     let modal = document.getElementById("skill-modal");
     let title = modal.querySelector(".modal-title");
@@ -80,7 +119,14 @@ async function openSkillInModal(skill) {
     let body = modal.querySelector(".modal-body");
     body.innerHTML = "";
 
-    let newNoteBtn = modal.querySelector('.new-note-btn');
+    let newBlockBtn = modal.querySelector(".new-block-btn");
+    newBlockBtn.onclick = async () => {
+        let newBlock = await skill.newBlock();
+        // let newSlot = newBlock.createSlot();
+        // body.appendChild(newSlot);
+    };
+
+    let newNoteBtn = modal.querySelector(".new-note-btn");
     newNoteBtn.onclick = async () => {
         let newNote = await skill.newNote();
         let newSlot = newNote.createSlot();

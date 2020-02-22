@@ -13,4 +13,8 @@ class Skill extends Model
     public function notes(){
         return $this->belongsToMany('App\Models\Note');
     }
+
+    public function blocks(){
+        return $this->belongsToMany('App\Models\Block');
+    }
 }
