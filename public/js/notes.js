@@ -94,6 +94,8 @@ class Note {
         noteContent.innerHTML = this.content;
         noteContent.setAttribute("id", "note-content-" + this.id);
         this.calculateNoteContentRows(noteContent);
+        if (noteContent.value[noteContent.value.length - 1] != "\n")
+            noteContent.value += "\n";
         noteContent.onfocus = event => {
             this.notecontetOnclick(event);
         };
