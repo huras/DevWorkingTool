@@ -12,13 +12,29 @@ class Block {
         }
     }
 
-    createSlot() {
+    async createSlot() {
         let slot = document.createElement("div");
 
         let title = document.createElement("input");
         title.value = this.title;
         title.classList.add("title");
         slot.appendChild(title);
+
+        let actions = document.createElement("div");
+        actions.classList.add("actions");
+        actions.classList.add("top");
+        slot.appendChild(actions);
+
+        let newNoteBtn = document.createElement("button");
+        // newNoteBtn.classList.add('');
+        newNoteBtn.addEventListener("click", async () => {
+            let newNote = await this.newNote();
+            let newSlot = newNote.createSlot();
+            slot.appendChild(newSlot);
+        });
+
+        newNoteBtn.innerHTML = "New Note";
+        actions.appendChild(newNoteBtn);
 
         this.notes.map(item => {
             let note = new Note(item.title, item.content, item.id);
@@ -35,7 +51,7 @@ class Block {
         let token = $('meta[name="csrf-token"]').attr("content");
         var baseurl = window.location.origin;
 
-        let retorno = $.ajax({
+        let retorno = await $.ajax({
             url: baseurl + "/block/ajax/store/" + relationship,
             method: "POST",
             data: {
@@ -55,7 +71,19 @@ class Block {
                 console.log(res);
             });
 
-        console.log(retorno);
-        return retorno;
+        return new Block(retorno.data.id, retorno.data.title, []);
+    }
+
+    // Notes
+    async newNote() {
+        const newNoteRes = await Note.newNote(this.id, "block");
+        const newNoteData = newNoteRes.data;
+        let note = new Note(
+            newNoteData.title,
+            newNoteData.content,
+            newNoteData.id
+        );
+        this.notes.push(note);
+        return note;
     }
 }

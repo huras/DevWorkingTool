@@ -99,8 +99,9 @@ class Skill {
 
     // Blocks
     async newBlock() {
-        const res = await Block.createBlock(this.id, "skill");
-        console.log(res);
+        const block = await Block.createBlock(this.id, "skill");
+        this.blocks.push(block);
+        return block;
     }
 
     async fetchBlocks() {}
@@ -137,6 +138,7 @@ async function openSkillInModal(skill) {
     await skill.fetchAll();
 
     let modal = document.getElementById("skill-modal");
+
     let title = modal.querySelector(".modal-title");
     title.innerHTML = skill.name;
 
@@ -149,8 +151,17 @@ async function openSkillInModal(skill) {
     let newBlockBtn = modal.querySelector(".new-block-btn");
     newBlockBtn.onclick = async () => {
         let newBlock = await skill.newBlock();
-        // let newSlot = newBlock.createSlot();
-        // body.appendChild(newSlot);
+        const blockSlot = await newBlock.createSlot();
+        body.appendChild(blockSlot);
+
+        setTimeout(() => {
+            blockSlot.scrollIntoView();
+            blockSlot.classList.add("highlited");
+        }, 10);
+
+        setTimeout(() => {
+            blockSlot.classList.remove("highlited");
+        }, 1500);
     };
 
     let newNoteBtn = modal.querySelector(".new-note-btn");
@@ -166,9 +177,9 @@ async function openSkillInModal(skill) {
         let newSlot = note.createSlot();
         body.appendChild(newSlot);
     });
-    skill.blocks.map(item => {
+    skill.blocks.map(async item => {
         let block = new Block(item.id, item.title, item.notes);
-        let newSlot = block.createSlot();
+        let newSlot = await block.createSlot();
         body.appendChild(newSlot);
     });
 

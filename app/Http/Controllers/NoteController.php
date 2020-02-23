@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Block;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Models\Note;
@@ -11,7 +12,8 @@ use App\Models\Skill;
 class NoteController extends Controller
 {
     // Ajax Methods
-    public function updateNote(Request $request){
+    public function updateNote(Request $request)
+    {
         $note = Note::find($request->id);
         $note->title = $request->title;
         $note->content = $request->content;
@@ -23,7 +25,8 @@ class NoteController extends Controller
         ]);
     }
 
-    public function newNote(Request $request, $type){
+    public function newNote(Request $request, $type)
+    {
         //Create note
         $note = new Note;
         $note->title = '[New Note]';
@@ -33,12 +36,16 @@ class NoteController extends Controller
         //Links note to workday's id inside the request
         switch ($type) {
             case 'workday':
-                    $workday = Workday::find($request->id);
-                    $note->workdays()->save($workday);
+                $workday = Workday::find($request->id);
+                $note->workdays()->save($workday);
                 break;
             case 'skill':
-                    $skill = Skill::find($request->id);
-                    $note->skills()->save($skill);
+                $skill = Skill::find($request->id);
+                $note->skills()->save($skill);
+                break;
+            case 'block':
+                $block = Block::find($request->id);
+                $note->blocks()->save($block);
                 break;
 
             default:

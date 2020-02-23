@@ -10,11 +10,18 @@ class Note extends Model
 
     public $fillable = ['content', 'title'];
 
-    public function workdays(){
+    public function workdays()
+    {
         return $this->belongsToMany('App\Models\Workday');
     }
 
-    public function skills(){
+    public function skills()
+    {
         return $this->belongsToMany('App\Models\Skill');
+    }
+
+    public function blocks()
+    {
+        return $this->belongsToMany('App\Models\Block');
     }
 }
