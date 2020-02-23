@@ -86,7 +86,7 @@ class Note {
             this.showSaveButton(this.id);
         };
         noteTitle.onfocus = event => {
-            this.notecontetOnclick(event);
+            this.noteTitleOnclick(event);
         };
 
         let noteContent = document.createElement("textarea");
