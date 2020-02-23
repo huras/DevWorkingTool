@@ -1,0 +1,45 @@
+Feramenta de acessos
+21:48 =>
+
+Criar Tabela e Model Projeto
+	Nome
+	Logo
+		Arquivo ou URL
+Criar Tabela e Model Acesso
+Criar relacionamento entre Projeto e Acesso, Projeto tem Acessos e Acesso tem Projetos
+
+
+
+================================================================================
+Dev Working Tool
+
+
+=== Feito
+Ao criar um novo block, atualizar o html da skill - OK
+Criar ferramentas de criar notes dentro de blocks
+	Nova Note - OK
+Ao clicar no titulo da note com [New Note], selecionar o texto dentro do input - OK
+Ao clicar no conteudo da note com [empty], selecionar o texto dentro do input - OK
+
+=== A fazer
+Criar ferramentas de criar notes dentro de blocks
+	Salvar o Block
+	Salvar Todo o Block
+	Mudar tipo do block
+Criar ferramentas na note
+	Deletar Note
+	Adicionar relacionamento
+		com Bloco
+		com Skill
+		com Project
+		com Workday
+	Mudar tipo da note
+Criar tipo de notes
+	Text
+	Rich Text
+	Image
+	Youtube
+Criar tipos de blocks
+	Page
+	Caroussel
+	Playlist
