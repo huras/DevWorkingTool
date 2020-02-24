@@ -12,12 +12,21 @@ class Block {
         }
     }
 
+    showSaveButton() {
+        let btnSalvar = document.getElementById("block-btn-salvar-" + this.id);
+        btnSalvar.style.display = "flex";
+    }
+
     async createSlot() {
         let slot = document.createElement("div");
 
         let title = document.createElement("input");
         title.value = this.title;
         title.classList.add("title");
+        title.id = "block-title-" + this.id;
+        title.oninput = event => {
+            this.showSaveButton(this.id);
+        };
         slot.appendChild(title);
 
         let actions = document.createElement("div");
@@ -25,14 +34,23 @@ class Block {
         actions.classList.add("top");
         slot.appendChild(actions);
 
+        // Save Btn
+        let saveBtn = document.createElement("button");
+        saveBtn.addEventListener("click", async event => {
+            this.updateBlock(event);
+        });
+        saveBtn.style.display = "none";
+        saveBtn.id = "block-btn-salvar-" + this.id;
+        saveBtn.innerHTML = "Save";
+        actions.appendChild(saveBtn);
+
+        // New Note Btn
         let newNoteBtn = document.createElement("button");
-        // newNoteBtn.classList.add('');
         newNoteBtn.addEventListener("click", async () => {
             let newNote = await this.newNote();
             let newSlot = newNote.createSlot();
             slot.appendChild(newSlot);
         });
-
         newNoteBtn.innerHTML = "New Note";
         actions.appendChild(newNoteBtn);
 
@@ -85,5 +103,31 @@ class Block {
         );
         this.notes.push(note);
         return note;
+    }
+
+    updateBlock(e) {
+        let token = $('meta[name="csrf-token"]').attr("content");
+        var baseurl = window.location.origin;
+
+        return $.ajax({
+            url: baseurl + "/block/ajax/update",
+            type: "POST",
+            data: {
+                id: this.id,
+                title: document.getElementById("block-title-" + this.id).value,
+                _token: token
+            }
+        })
+            .done(res => {
+                console.log(res);
+                e.target.style.display = "none";
+            })
+            .fail(res => {
+                console.log(res);
+            })
+            .always(res => {
+                console.log(res);
+                // this.afterSaveNote(noteID);
+            });
     }
 }

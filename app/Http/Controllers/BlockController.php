@@ -34,4 +34,16 @@ class BlockController extends Controller
                 200
             );
     }
+
+    public function updateAjax(Request $request)
+    {
+        $block = Block::find($request->id);
+        $block->title = $request->title;
+        $block->save();
+        return response()->json([
+            'status' => true,
+            'toast' => 'Bloco atualizado com sucesso!',
+            'toast-type' => 'job-done'
+        ]);
+    }
 }

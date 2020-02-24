@@ -422,7 +422,7 @@
                 text-align: center;
                 font-weight: bold;
                 border: 0;
-                background-color: #f7f7f7cc;
+                background-color: transparent;
             }
             .note-content {
                 margin-top: 4px;
@@ -430,7 +430,7 @@
                 border: 0;
                 padding-bottom: 4px;
 
-                background-color: #f7f7f7cc;
+                background-color: #fefefecc;
                 padding: 8px;
                 border: 1px solid #e0e0e0;
             }
@@ -455,7 +455,7 @@
                 text-align: center;
                 font-weight: bold;
                 border: 0;
-                background-color: #f7f7f7cc;
+                background-color: #fefefecc;
             }
 
             transition: all 0.3s ease-in;
