@@ -91,7 +91,8 @@ class Skill {
         let note = new Note(
             newNoteData.title,
             newNoteData.content,
-            newNoteData.id
+            newNoteData.id,
+            newNoteData.type
         );
         this.notes.push(note);
         return note;
@@ -120,7 +121,7 @@ class Skill {
                 this.notes = [];
                 data.notes.map(note => {
                     this.notes.push(
-                        new Note(note.title, note.content, note.id)
+                        new Note(note.title, note.content, note.id, note.type)
                     );
                 });
                 this.blocks = [];
@@ -173,7 +174,7 @@ async function openSkillInModal(skill) {
 
     body.appendChild(skill.buildMenu());
     skill.notes.map(item => {
-        let note = new Note(item.title, item.content, item.id);
+        let note = new Note(item.title, item.content, item.id, item.type);
         let newSlot = note.createSlot();
         body.appendChild(newSlot);
     });

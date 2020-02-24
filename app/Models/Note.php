@@ -8,7 +8,7 @@ class Note extends Model
 {
     protected $table = 'notes';
 
-    public $fillable = ['content', 'title'];
+    public $fillable = ['content', 'title', 'type'];
 
     public function workdays()
     {

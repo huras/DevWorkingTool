@@ -1,8 +1,9 @@
 class Note {
-    constructor(title, content, id) {
+    constructor(title, content, id, type = "text") {
         this.id = id;
         this.title = title;
         this.content = content;
+        this.type = type;
     }
 
     calculateNoteContentRows(textarea) {
@@ -29,6 +30,7 @@ class Note {
             type: "POST",
             data: {
                 id: noteID,
+                type: document.getElementById("note-type-" + noteID).value,
                 title: document.getElementById("note-title-" + noteID).value,
                 content: document.getElementById("note-content-" + noteID)
                     .value,
@@ -62,9 +64,46 @@ class Note {
         }
     }
 
-    showSaveButton(noteID) {
-        let btnSalvar = document.getElementById("btn-salvar-" + noteID);
-        btnSalvar.style.display = "block";
+    youtube_parser(url) {
+        var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+        var match = url.match(regExp);
+        return match && match[7].length == 11 ? match[7] : false;
+    }
+
+    hideAllContents() {
+        if (this.youtubeIframe) this.youtubeIframe.style.display = "none";
+        if (this.noteContent) this.noteContent.style.display = "none";
+    }
+
+    changeShownContentType(type) {
+        switch (type) {
+            case "youtube":
+                this.hideAllContents();
+                if (this.youtubeIframe) {
+                    let video_id = this.youtube_parser(this.content);
+                    let finalURL = "https://www.youtube.com/embed/" + video_id;
+                    this.youtubeIframe.setAttribute("src", finalURL);
+                    this.youtubeIframe.style.display = "flex";
+                }
+                break;
+            case "text":
+                this.hideAllContents();
+                if (this.noteContent) this.noteContent.style.display = "flex";
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    noteTypeOnChange(event) {
+        this.type = event.target.value;
+        this.changeShownContentType(this.type);
+        this.showSaveButton();
+    }
+
+    showSaveButton() {
+        if (this.btnSalvar) this.btnSalvar.style.display = "flex";
     }
 
     // Public funcitons
@@ -77,12 +116,32 @@ class Note {
         btnSalvar.onclick = event => {
             this.updateNote(event, this.id);
         };
+        this.btnSalvar = btnSalvar;
+
+        let noteType = document.createElement("select");
+        noteType.setAttribute("id", "note-type-" + this.id);
+        noteType.classList.add("note-type");
+        noteType.style.display = "flex";
+        const noteTypes = ["text", "youtube"];
+        noteTypes.map(type => {
+            let typeOption = document.createElement("option");
+            typeOption.value = type;
+            typeOption.innerHTML = type;
+            if (type == this.type) {
+                typeOption.setAttribute("selected", true);
+            }
+            noteType.appendChild(typeOption);
+        });
+        noteType.addEventListener("input", event => {
+            this.noteTypeOnChange(event);
+        });
 
         let noteTitle = document.createElement("input");
         noteTitle.classList.add("note-title");
         noteTitle.setAttribute("id", "note-title-" + this.id);
         noteTitle.value = this.title;
         noteTitle.oninput = event => {
+            this.title = event.target.value;
             this.showSaveButton(this.id);
         };
         noteTitle.onfocus = event => {
@@ -100,6 +159,7 @@ class Note {
             this.notecontetOnclick(event);
         };
         noteContent.oninput = event => {
+            this.content = event.target.value;
             this.showSaveButton(this.id);
         };
         noteContent.onkeydown = e => {
@@ -129,13 +189,35 @@ class Note {
 
             this.showSaveButton(this.id);
         };
+        this.noteContent = noteContent;
+
+        let youtubeIframe = document.createElement("iframe");
+        youtubeIframe.setAttribute("width", "75%");
+        youtubeIframe.setAttribute("height", "402");
+        youtubeIframe.setAttribute("frameborder", "0");
+        youtubeIframe.setAttribute(
+            "allow",
+            "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+        );
+        youtubeIframe.setAttribute("allowfullscreen", "");
+        youtubeIframe.style.display = "none";
+        youtubeIframe.id = "note-yt-iframe-" + this.id;
+        this.youtubeIframe = youtubeIframe;
+
+        let noteContentWrapper = document.createElement("div");
+        noteContentWrapper.id = "note-content-wrapper-" + this.id;
+        noteContentWrapper.appendChild(noteContent);
+        noteContentWrapper.appendChild(youtubeIframe);
 
         let noteSlot = document.createElement("div");
         noteSlot.classList.add("note-slot");
         noteSlot.appendChild(noteTitle);
-        noteSlot.appendChild(noteContent);
+        noteSlot.appendChild(noteContentWrapper);
         noteSlot.appendChild(btnSalvar);
+        noteSlot.appendChild(noteType);
         noteSlot.id = "note-" + this.id;
+
+        this.changeShownContentType(this.type);
 
         return noteSlot;
     }

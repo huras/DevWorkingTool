@@ -5,7 +5,9 @@ class Block {
         if (notes != []) {
             this.notes = [];
             notes.map(note => {
-                this.notes.push(new Note(note.title, note.content, note.id));
+                this.notes.push(
+                    new Note(note.title, note.content, note.id, note.type)
+                );
             });
         } else {
             this.notes = notes;
@@ -55,7 +57,7 @@ class Block {
         actions.appendChild(newNoteBtn);
 
         this.notes.map(item => {
-            let note = new Note(item.title, item.content, item.id);
+            let note = new Note(item.title, item.content, item.id, item.type);
             let newSlot = note.createSlot();
             slot.appendChild(newSlot);
         });
@@ -99,7 +101,8 @@ class Block {
         let note = new Note(
             newNoteData.title,
             newNoteData.content,
-            newNoteData.id
+            newNoteData.id,
+            newNoteData.type
         );
         this.notes.push(note);
         return note;

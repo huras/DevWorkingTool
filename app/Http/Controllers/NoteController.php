@@ -16,6 +16,7 @@ class NoteController extends Controller
     {
         $note = Note::find($request->id);
         $note->title = $request->title;
+        $note->type = $request->type;
         $note->content = $request->content;
         $note->save();
         return response()->json([
@@ -31,6 +32,7 @@ class NoteController extends Controller
         $note = new Note;
         $note->title = '[New Note]';
         $note->content = '[empty]';
+        $note->type = 'text';
         $note->save();
 
         //Links note to workday's id inside the request

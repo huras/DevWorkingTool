@@ -15,17 +15,20 @@ Dev Working Tool
 
 
 === Feito
-Ao criar um novo block, atualizar o html da skill - OK
+Ao criar um novo block, atualizar o html da skill
 Criar ferramentas de criar notes dentro de blocks
-	Nova Note - OK
-Ao clicar no titulo da note com [New Note], selecionar o texto dentro do input - OK
-Ao clicar no conteudo da note com [empty], selecionar o texto dentro do input - OK
+	Nova Note
+    Salvar o Block
+Ao clicar no titulo da note com [New Note], selecionar o texto dentro do input
+Ao clicar no conteudo da note com [empty], selecionar o texto dentro do input
+Criar tipo de notes
+	Text
+    Youtube
 
 === A fazer
 Criar ferramentas de criar notes dentro de blocks
-	Salvar o Block
 	Salvar Todo o Block
-	Mudar tipo do block
+	Mudar tipo do Block
 Criar ferramentas na note
 	Deletar Note
 	Adicionar relacionamento
@@ -35,10 +38,8 @@ Criar ferramentas na note
 		com Workday
 	Mudar tipo da note
 Criar tipo de notes
-	Text
 	Rich Text
 	Image
-	Youtube
 Criar tipos de blocks
 	Page
 	Caroussel
