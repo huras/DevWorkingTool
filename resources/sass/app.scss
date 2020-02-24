@@ -434,6 +434,11 @@
                 padding: 8px;
                 border: 1px solid #e0e0e0;
             }
+            .note-ContentWrapper {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
 
             transition: all 0.3s ease-in;
             box-shadow: #ff8d00 0px 0px 0px 0px;

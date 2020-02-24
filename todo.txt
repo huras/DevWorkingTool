@@ -24,7 +24,8 @@ Ao clicar no conteudo da note com [empty], selecionar o texto dentro do input
 Criar tipo de notes
 	Text
     Youtube
-
+Criar ferramentas na note
+	Mudar tipo da note
 === A fazer
 Criar ferramentas de criar notes dentro de blocks
 	Salvar Todo o Block
@@ -36,7 +37,6 @@ Criar ferramentas na note
 		com Skill
 		com Project
 		com Workday
-	Mudar tipo da note
 Criar tipo de notes
 	Rich Text
 	Image
@@ -44,3 +44,5 @@ Criar tipos de blocks
 	Page
 	Caroussel
 	Playlist
+Adicionar categorias em skills
+Adicionar dependência de uma skill na outra (ex: JS e JQuerry, CSS e SASS)

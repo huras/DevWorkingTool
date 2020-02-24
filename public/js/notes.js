@@ -208,13 +208,14 @@ class Note {
         noteContentWrapper.id = "note-content-wrapper-" + this.id;
         noteContentWrapper.appendChild(noteContent);
         noteContentWrapper.appendChild(youtubeIframe);
+        noteContentWrapper.classList.add("note-ContentWrapper");
 
         let noteSlot = document.createElement("div");
         noteSlot.classList.add("note-slot");
         noteSlot.appendChild(noteTitle);
-        noteSlot.appendChild(noteContentWrapper);
         noteSlot.appendChild(btnSalvar);
         noteSlot.appendChild(noteType);
+        noteSlot.appendChild(noteContentWrapper);
         noteSlot.id = "note-" + this.id;
 
         this.changeShownContentType(this.type);
