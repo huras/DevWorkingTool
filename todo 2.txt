@@ -1,0 +1,24 @@
+Posts
+    Um título (opcional) e um input de algum tipo
+	Types:
+		Text
+            Recebe inputs através de um <textarea>
+		Rich Text
+            Recebe inputs através de um ck editor
+		Image URL
+            Recebe inputs através de um campo de um <input type='text'>
+        Image File
+            Recebe inputs através de um campo de um <input type='file'>
+		Youtube
+            Recebe inputs através de um campo de um <input type='text'>
+            Usa Regex para remover a id do video e monta um iframe
+                Deve ter dimensões reguláveis
+                Ver se tem um jeito de detectar automaticamente a resolução de um video
+Blocks
+    Tem índice
+	Types
+		Page
+            Um coluna exibindo todos os blocks e posts contidos
+		Tabs
+		Image Carousel
+		Youtube Playlist
