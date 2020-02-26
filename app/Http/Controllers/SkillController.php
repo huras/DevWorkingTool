@@ -14,6 +14,12 @@ class SkillController extends Controller
         return view('Skill.index', compact('skills'));
     }
 
+    public function view($id)
+    {
+        $skill = Skill::find($id);
+        return view('Skill.view', compact('skill'));
+    }
+
     public function store(Request $request)
     {
         $validation = $this->validaSkill($request->all());

@@ -92,12 +92,16 @@
         </div>
         <div class='skill-listing' id='skill-listing'>
             <script>
-                let skill = null, notes = [];
-                @foreach ($skills as $skill)
-                    skill = new Skill({{$skill->id}}, '{{$skill->name}}', '{{$skill->icon}}');
-                    insertSkillSlot(skill);
-                @endforeach
+                let skills = [];
             </script>
+            @foreach ($skills as $skill)
+                <div class='skill-row'>
+                    @include('components.skillSlot', ['skill' => $skill, ])
+                    <div class='actions'>
+
+                    </div>
+                </div>
+            @endforeach
         </div>
     </section>
 @endsection

@@ -73,6 +73,7 @@ class Note {
     hideAllContents() {
         if (this.youtubeIframe) this.youtubeIframe.style.display = "none";
         if (this.noteContent) this.noteContent.style.display = "none";
+        if (this.imageViewer) this.imageViewer.style.display = "none";
     }
 
     changeShownContentType(type) {
@@ -89,6 +90,22 @@ class Note {
             case "text":
                 this.hideAllContents();
                 if (this.noteContent) this.noteContent.style.display = "flex";
+                break;
+            case "image":
+                this.hideAllContents();
+                if (this.imageViewer) {
+                    this.imageViewer.style.display = "flex";
+                    let imagePreview = document.getElementById(
+                        "image-preview-" + this.id
+                    );
+
+                    if (this.content.includes("http")) {
+                        imagePreview.src = this.content;
+                    } else {
+                        imagePreview.src = caminhoPublico + "/" + this.content;
+                    }
+                }
+
                 break;
 
             default:
@@ -122,7 +139,7 @@ class Note {
         noteType.setAttribute("id", "note-type-" + this.id);
         noteType.classList.add("note-type");
         noteType.style.display = "flex";
-        const noteTypes = ["text", "youtube"];
+        const noteTypes = ["text", "image", "youtube"];
         noteTypes.map(type => {
             let typeOption = document.createElement("option");
             typeOption.value = type;
@@ -204,10 +221,22 @@ class Note {
         youtubeIframe.id = "note-yt-iframe-" + this.id;
         this.youtubeIframe = youtubeIframe;
 
+        let imagePreview = document.createElement("img");
+        imagePreview.classList.add("image-previewer");
+        imagePreview.id = "image-preview-" + this.id;
+        let novaImagem = document.createElement("input");
+        novaImagem.type = "file";
+        let imageViewer = document.createElement("div");
+        imageViewer.style.display = "none";
+        imageViewer.appendChild(imagePreview);
+        imageViewer.appendChild(novaImagem);
+        this.imageViewer = imageViewer;
+
         let noteContentWrapper = document.createElement("div");
         noteContentWrapper.id = "note-content-wrapper-" + this.id;
         noteContentWrapper.appendChild(noteContent);
         noteContentWrapper.appendChild(youtubeIframe);
+        noteContentWrapper.appendChild(imageViewer);
         noteContentWrapper.classList.add("note-ContentWrapper");
 
         let noteSlot = document.createElement("div");

@@ -13,6 +13,10 @@
     <link rel="stylesheet" href="{{asset('css/bootstrap.css')}}">
     <link rel="stylesheet" href="{{asset('css/select2.min.css')}}">
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
+
+    <script>
+        const caminhoPublico = '';
+    </script>
 </head>
 <body>
     <script src="{{ asset('js/jquery.min.js') }}" defer></script>

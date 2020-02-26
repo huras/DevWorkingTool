@@ -25,6 +25,7 @@ Route::group(['prefix' => 'skill'], function () {
     Route::get('/', 'SkillController@index')->name('skill.list');
     Route::get('/ajax/fetchAll/{id}', 'SkillController@fetchAll')->name('skill.fetchAll');
     Route::post('/store', 'SkillController@store')->name('skill.store');
+    Route::get('/view/{id}', 'SkillController@view')->name('skill.view');
 });
 
 Route::group(['prefix' => 'block'], function () {
