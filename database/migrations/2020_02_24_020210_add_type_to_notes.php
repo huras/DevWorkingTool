@@ -14,7 +14,7 @@ class AddTypeToNotes extends Migration
     public function up()
     {
         Schema::table('notes', function (Blueprint $table) {
-            $table->string('type')->default('text');
+            $table->string('type')->default('text')->nullable();
         });
     }
 
