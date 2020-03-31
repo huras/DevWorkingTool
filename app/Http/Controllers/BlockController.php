@@ -35,6 +35,22 @@ class BlockController extends Controller
             );
     }
 
+    public function newEmpty(Request $request, $relationship, $id)
+    {
+        $block = new Block;
+        $block->title = '[New Block]';
+        $block->save();
+
+        switch ($relationship) {
+            case 'skill':
+                $skill = Skill::find($id);
+                $block->skills()->save($skill);
+                break;
+        }
+
+        return redirect()->back();
+    }
+
     public function updateAjax(Request $request)
     {
         $block = Block::find($request->id);

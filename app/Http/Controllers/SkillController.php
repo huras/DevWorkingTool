@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Skill;
 use Validator;
+use Image;
 
 class SkillController extends Controller
 {
@@ -35,7 +36,22 @@ class SkillController extends Controller
                     ]
                 );
         } else {
-            $skill = Skill::create($request->all());
+            $data = $request->all();
+            $image = $request->file('icon');
+            if($image){
+                $image_name = time() . '.' . $image->getClientOriginalExtension();
+                $destinationPath = public_path('/storage/skill/thumbnail');
+                $resize_image = Image::make($image->getRealPath());
+                $resize_image->resize(50, 50, function($constraint){
+                    $constraint->aspectRatio();
+                   })->save($destinationPath . '/' . $image_name);
+
+                $destinationPath = public_path('/storage/skill');
+                $image->move($destinationPath, $image_name);
+                $data['icon'] = $image_name;
+            }
+
+            $skill = Skill::create($data);
             return redirect()
                 ->action('SkillController@index')
                 ->with('toast', ['msg' => $skill->name . ' inserido com sucesso!', 'context' => 'success']);

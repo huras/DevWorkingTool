@@ -15,13 +15,28 @@ class NoteController extends Controller
     public function updateNote(Request $request)
     {
         $note = Note::find($request->id);
-        $note->title = $request->title;
-        $note->type = $request->type;
-        $note->content = $request->content;
+        if(isset($request->title))
+            $note->title = $request->title;
+        if(isset($request->type))
+            $note->type = $request->type;
+        if(isset($request->content))
+            $note->content = $request->content;
         $note->save();
         return response()->json([
             'status' => true,
             'toast' => 'Nota atualizada com sucesso!',
+            'toast-type' => 'job-done'
+        ]);
+    }
+
+    public function removeNote(Request $request, $id){
+        $note = Note::find($request->id);
+        $note->delete();
+        //Sends the note id back to the request sender
+        return response()->json([
+            'status' => true,
+            'data' => $note,
+            'toast' => 'Nota removida com sucesso!',
             'toast-type' => 'job-done'
         ]);
     }
@@ -62,6 +77,39 @@ class NoteController extends Controller
             'toast' => 'Nova nota criada com sucesso!',
             'toast-type' => 'job-done'
         ]);
+    }
+
+    public function newEmpty(Request $request, $relationship, $id, $type)
+    {
+        //Create note
+        $note = new Note;
+        $note->title = '[New Note]';
+        $note->content = '[empty]';
+        $note->type = $type;
+        $note->save();
+
+        //Links note to workday's id inside the request
+        switch ($relationship) {
+            case 'workday':
+                $workday = Workday::find($id);
+                $note->workdays()->save($workday);
+                break;
+            case 'skill':
+                $skill = Skill::find($id);
+                $note->skills()->save($skill);
+                break;
+            case 'block':
+                $block = Block::find($id);
+                $note->blocks()->save($block);
+                break;
+
+            default:
+                # code...
+                break;
+        }
+
+        //Sends the note id back to the request sender
+        return redirect()->back();        
     }
 
     // Common Methods

@@ -29,13 +29,16 @@ Route::group(['prefix' => 'skill'], function () {
 });
 
 Route::group(['prefix' => 'block'], function () {
-    Route::post('/ajax/update', 'BlockController@updateAjax')->name('note.update');
+    Route::get('/ajax/update', 'BlockController@updateAjax')->name('note.update');
     Route::post('/ajax/store/{relationship}', 'BlockController@new');
+    Route::get('/newEmpty/{relationship}/{id}', 'BlockController@newEmpty');
 });
 
 Route::group(['prefix' => 'note'], function () {
-    Route::post('/ajax/update', 'NoteController@updateNote')->name('note.update');
+    Route::get('/ajax/update', 'NoteController@updateNote')->name('note.update');
     Route::post('/ajax/store/{type}', 'NoteController@newNote')->name('note.store');
+    Route::get('/newEmpty/{relationship}/{id}/{type}', 'NoteController@newEmpty');
+    Route::get('/removeNote/{id}', 'NoteController@removeNote');
     // Route::post('/ajax/update', 'NoteController@updateAjax')->name('note.update');
 });
 
