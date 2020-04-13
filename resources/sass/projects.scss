@@ -1,0 +1,61 @@
+.acesso-list{
+    padding: 8px;
+    width: 100vw;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.acesso-slot{
+    width: 100%;
+    max-width: 290px;
+    
+    background-color: #f1edf8;
+    border: 1px solid #dadadb;
+    padding: 8px;
+    border-radius: 5px;
+
+    a{
+        color: rgb(108, 159, 253);
+    }
+
+    .field{
+        width: 100%;
+        padding-top: 4px;
+        margin-top: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+
+        input{
+            color:black;
+            border: 0;
+            padding: 0px 4px;
+            height: 30px;
+        }
+
+        svg{
+            height: 20px;
+            width: auto;
+            margin-right: 4px;
+            fill: #7655be;
+        }
+
+        @media (max-width: 425px) {
+            margin-left: 8px;
+            padding-right: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+
+            svg{
+                margin-bottom: 4px;
+            }
+        }
+
+        input{
+            width: 100%;
+        }
+    }
+}

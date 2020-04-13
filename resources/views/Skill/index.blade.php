@@ -36,9 +36,11 @@
             </script>
             @foreach ($skills as $skill)
                 <span>
-                    <a class='skill-row' href='/skill/view/{{$skill->id}}'>
-                        <img src="/storage/skill/thumbnail/{{$skill->icon}}" alt="" srcset="">
-                        {{$skill->name}}
+                    <a href='/skill/view/{{$skill->id}}'>
+                        <div class='skill-slot'>
+                            <img src="/storage/skill/thumbnail/{{$skill->icon}}" alt="" srcset="">
+                            {{$skill->name}}
+                        </div>
                     </a>
                 </span>
             @endforeach

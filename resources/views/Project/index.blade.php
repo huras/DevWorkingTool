@@ -1,50 +1,40 @@
 @extends('Layout.default')
 
 @section('content')
+    <form action="{{route('project.store')}}" method='POST' enctype="multipart/form-data">
+        @csrf
+        <label for="">Nome:
+            <input type="text" name='name' value='{{old('name')}}'>
+            @error('name')
+                <span class='text-danger'>{{ $message }}</span>
+            @enderror
+        </label>
+        <div>
+            <label for="">Icone Arquivo:
+                <input type="file" name='icon' value='{{old('icon')}}'>
+            </label>
+            @error('icon')
+                <span class='text-danger'>{{ $message }}</span>
+            @enderror
+        </div>
+        <input type="submit">
+    </form>    
+
     <div class='project-list'>
         @foreach ($projects as $item)
             <?php $modalID = 'modal-acessos-'.$item->id ?>
             <div class='slot'>
-                <div class='head' onclick="$('#{{$modalID}}').modal('show');">
+                <div class='head' onclick="window.location = '/project/{{$item->id}}/acessos';">
                     @if(strpos($item->icon ,'://'))
                         <img class='logo' src="{{$item->icon}}" alt="">
                     @else
-                        <img class='logo' src="{{asset('/storage/projects/'.$item->icon)}}" alt="">
+                        <img class='logo' src="{{asset('/storage/project/thumbnail/'.$item->icon)}}" alt="">
                     @endif
                     <div>{{$item->name}}</div>
                     <div class='acoes'>
                         <span class='acessos'>
                             <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="key" class="acessos svg-inline--fa fa-key fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M512 176.001C512 273.203 433.202 352 336 352c-11.22 0-22.19-1.062-32.827-3.069l-24.012 27.014A23.999 23.999 0 0 1 261.223 384H224v40c0 13.255-10.745 24-24 24h-40v40c0 13.255-10.745 24-24 24H24c-13.255 0-24-10.745-24-24v-78.059c0-6.365 2.529-12.47 7.029-16.971l161.802-161.802C163.108 213.814 160 195.271 160 176 160 78.798 238.797.001 335.999 0 433.488-.001 512 78.511 512 176.001zM336 128c0 26.51 21.49 48 48 48s48-21.49 48-48-21.49-48-48-48-48 21.49-48 48z"></path></svg>
                         </span>
-                    </div>
-                </div>
-
-                <!-- Modal -->
-                <div class="modal fade" id="{{$modalID}}" tabindex="-1" role="dialog" aria-labelledby="{{$modalID}}Label" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="{{$modalID}}Label"> Acessos {{$item->name}} </h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <div>
-                                    <script>
-                                        window.addEventListener('load', function(){
-                                            @foreach ($item->acessos as $acesso)
-                                                insertAccessSlot({{$acesso->id}}, {{$item->id}}, '{{$acesso->title}}', '{{$acesso->address}}', '{{$acesso->user}}', '{{$acesso->password}}');
-                                            @endforeach
-                                        });
-                                    </script>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                                <button type="button" style='display: none;' class="btn btn-primary save-btn">Salvar Mudanças</button>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

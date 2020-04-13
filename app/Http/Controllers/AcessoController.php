@@ -11,4 +11,6 @@ class AcessoController extends Controller
         $projects = Project::orderBy('name', 'asc')->get();
         return view('Acesso.projects', compact('projects'));
     }
+
+    // public function 
 }

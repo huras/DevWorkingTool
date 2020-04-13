@@ -8,6 +8,7 @@ use Illuminate\Http\Response;
 use App\Models\Note;
 use App\Models\Workday;
 use App\Models\Skill;
+use Image;
 
 class NoteController extends Controller
 {
@@ -15,12 +16,32 @@ class NoteController extends Controller
     public function updateNote(Request $request)
     {
         $note = Note::find($request->id);
-        if(isset($request->title))
-            $note->title = $request->title;
-        if(isset($request->type))
-            $note->type = $request->type;
-        if(isset($request->content))
-            $note->content = $request->content;
+        $note->title = $request->title;
+        $note->type = $request->type;
+
+        switch ($note->type) {
+            case 'text':
+                $note->content = $request->content;
+                break;
+            case 'image':
+                $image = $request->file('content');
+                if($image){
+                    $image_name = time() . '.' . $image->getClientOriginalExtension();
+                    $destinationPath = public_path('/storage/note/thumbnail');
+                    $resize_image = Image::make($image->getRealPath());
+                    $resize_image->resize(250, 250, function($constraint){
+                        $constraint->aspectRatio();
+                        })->save($destinationPath . '/' . $image_name);
+    
+                    $destinationPath = public_path('/storage/note');
+                    $image->move($destinationPath, $image_name);
+                    $note->content = $image_name;
+                }
+                break;
+            default:                
+                break;
+        }
+
         $note->save();
         return response()->json([
             'status' => true,
