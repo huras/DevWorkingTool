@@ -17,8 +17,9 @@ class SkillController extends Controller
 
     public function view($id)
     {
+        $skills = Skill::all();
         $skill = Skill::find($id);
-        return view('Skill.view', compact('skill'));
+        return view('Skill.view', compact('skill', 'skills'));
     }
 
     public function store(Request $request)

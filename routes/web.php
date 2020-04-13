@@ -35,6 +35,7 @@ Route::group(['prefix' => 'block'], function () {
     Route::get('/ajax/update', 'BlockController@updateAjax')->name('note.update');
     Route::post('/ajax/store/{relationship}', 'BlockController@new');
     Route::get('/newEmpty/{relationship}/{id}', 'BlockController@newEmpty');
+    Route::get('/{idBlock}/ajax/newSkillLink/{idSkill}', 'BlockController@newSkillLink');
 });
 
 Route::group(['prefix' => 'note'], function () {

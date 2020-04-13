@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Block;
 use App\Models\Skill;
+use Exception;
 use Illuminate\Http\Request;
 
 class BlockController extends Controller
@@ -61,5 +62,25 @@ class BlockController extends Controller
             'toast' => 'Bloco atualizado com sucesso!',
             'toast-type' => 'job-done'
         ]);
+    }
+
+    public function newSkillLink(Request $request, $idBlock, $idSkill)
+    {
+        try{
+            $skill = Skill::find($idSkill);
+            $block = Block::find($idBlock);
+            $block->skills()->save($skill);
+            return response()->json([
+                'status' => true,
+                'toast' => 'Nova skill inserida com sucesso!',
+                'toast-type' => 'job-done'
+            ]);
+        } catch(Exception $ex){
+            return response()->json([
+                'status' => false,
+                'toast' => $ex->getMessage(),
+                'toast-type' => 'job-done'
+            ], 500);
+        }
     }
 }

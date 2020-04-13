@@ -1,6 +1,6 @@
 @extends('Layout.default')
 
-@section('title') DWT - Skill - {{$skill->name}} @endsection
+@section('title') DWT - {{$skill->name}} @endsection
 
 
 @section('favicon') <link rel="icon" type="image/png" href="/storage/skill/thumbnail/{{$skill->icon}}" /> @endsection
@@ -29,10 +29,8 @@
                     </span>
 
                     <span title='Expand/Collapse' onclick='afterExpandCollapse({{$block->id}})' style='border: none; background-color:transparent; padding: 0;' type="button" class='action collapsed' data-toggle="collapse" data-target="#block-body-{{$block->id}}" aria-expanded="false" aria-controls="block-body-{{$block->id}}">
-                        
-                            <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-down" class="btn-show svg-inline--fa fa-caret-down fa-w-10" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path></svg>
-                            <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-up" style='display:none;' class="btn-hide svg-inline--fa fa-caret-up fa-w-10" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M288.662 352H31.338c-17.818 0-26.741-21.543-14.142-34.142l128.662-128.662c7.81-7.81 20.474-7.81 28.284 0l128.662 128.662c12.6 12.599 3.676 34.142-14.142 34.142z"></path></svg>
-                        
+                        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-down" class="btn-show svg-inline--fa fa-caret-down fa-w-10" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path></svg>
+                        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-up" style='display:none;' class="btn-hide svg-inline--fa fa-caret-up fa-w-10" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M288.662 352H31.338c-17.818 0-26.741-21.543-14.142-34.142l128.662-128.662c7.81-7.81 20.474-7.81 28.284 0l128.662 128.662c12.6 12.599 3.676 34.142-14.142 34.142z"></path></svg>
                     </span>
 
                     <span title='Save block' onclick="updateBlockTitle({{$block->id}})">
@@ -63,10 +61,16 @@
                     </span>
 
                     <span style="margin:0px 10px 0px 6px; color: #aaaaaa;">|</span>
+                    
+                    <span title='Add link to other skill' onclick="linkToOtherSkill({{$block->id}})">
+                        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="tag" class="svg-inline--fa fa-tag fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M0 252.118V48C0 21.49 21.49 0 48 0h204.118a48 48 0 0 1 33.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137 0 67.882L293.823 497.941c-18.745 18.745-49.137 18.745-67.882 0L14.059 286.059A48 48 0 0 1 0 252.118zM112 64c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48z"></path></svg>
+                    </span>
 
-                    <div class='skill-logos'>
+                    <div class='skill-logos' id='block-skill-logos-{{$block->id}}'>
                         @foreach ($block->skills as $_skill)
-                            <img src="/storage/skill/thumbnail/{{$_skill->icon}}" style='height: 22px; width: auto; margin-right: 4px;' alt="">
+                            <a href="/skill/view/{{$_skill->id}}" class='block-skill-link'>
+                                <img  skill-id='{{$_skill->id}}' title='{{$_skill->name}}' src="/storage/skill/thumbnail/{{$_skill->icon}}">
+                            </a>
                         @endforeach
                     </div>
                 </div>
@@ -136,6 +140,65 @@
     </div>
 
     <script>
+
+        let skills = JSON.parse(`{!!json_encode($skills)!!}`);
+        function linkToOtherSkill(idBlock){
+            let skillIcons = (document.getElementById('block-skill-logos-'+idBlock)).querySelectorAll('img');
+            
+            let skillsIn = [];
+            for(img of skillIcons){
+                skillsIn.push(img.getAttribute('skill-id'));
+            }            
+
+            let wantedSkills = skills.filter((item) => {
+                return (skillsIn.indexOf(item.id+"") == -1);
+            });
+            let wantedSkillsIDS = wantedSkills.map(skill => {
+                return skill.id+"";
+            })
+            console.log(wantedSkillsIDS);
+            
+            $('#block-to-add-skill-link').val(idBlock);
+
+            let options = document.querySelectorAll('#select-new-skill-link option');
+            for(option of options){
+                if(wantedSkillsIDS.indexOf(option.getAttribute('value')) == -1){
+                    option.setAttribute('disabled', 'disabled');
+                } else {
+                    option.removeAttribute('disabled');
+                }
+            }
+
+
+            $('#modal-NewSKillLink').modal('show');
+        }
+        function addNewSkillLink(idBlock){
+            let idSkill = $('#select-new-skill-link').val();
+            let skill = (skills.filter(item => { return item.id+"" == idSkill }))[0];
+            if(skill){
+                let newSkillSlot = "<a href='/skill/view/"+idSkill+"' class='block-skill-link'> <img skill-id="+idSkill+" title='"+skill.name+"' src='/storage/skill/thumbnail/"+skill.icon+"'> </a>";
+                let skillLogos = document.getElementById('block-skill-logos-'+idBlock);
+
+                $.ajax({
+                    url: '/block/'+idBlock+'/ajax/newSkillLink/'+idSkill,
+                    method: 'GET',
+                    success: (res) => {
+                        if(res.status){
+                            skillLogos.innerHTML += newSkillSlot;
+                            $('#modal-NewSKillLink').modal('hide');
+                        } else {
+                            alert('Erro ao adicionar novo link de skill, porfavor tente novamente. (Erro no servidor)');
+                        }
+                    },
+                    error: (res) => {
+                        alert('Erro ao adicionar novo link de skill, porfavor tente novamente.');                   
+                    }
+                });                
+            } else {
+                alert('Sk1ll inválida');
+            }
+        }
+
         function afterExpandCollapse(id) {
             setTimeout(() => {
                 let block = document.getElementById('block-slot-'+id);
@@ -182,8 +245,6 @@
                 }
             })
         };
-
-        
 
         function updateNote(id) {
             const noteTitle  = document.getElementById('note-title-'+id);
@@ -380,6 +441,33 @@
             <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
             <button type="button" class="btn btn-primary" onclick="updateNoteType($('#note-to-change-type').val());">Save</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    {{-- Modal nova associação skill --}}
+    <div class="modal fade" id="modal-NewSKillLink" tabindex="-1" role="dialog" aria-labelledby="modal-NewSKillLinkLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="modal-NewSKillLinkLabel"> Add link to skill </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id='block-to-add-skill-link' value=''>
+                <label for="">Skill</label>
+                <select name="note-type" id="select-new-skill-link">
+                    @foreach ($skills as $skill)
+                        <option value="{{$skill->id}}">{{$skill->name}}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary" onclick="addNewSkillLink($('#block-to-add-skill-link').val());">Save</button>
             </div>
         </div>
         </div>
