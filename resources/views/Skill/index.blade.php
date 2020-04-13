@@ -21,15 +21,12 @@
                 <span class='text-danger'>{{ $message }}</span>
             @enderror
         </div>
-        <input type="submit">
+        <input type="submit" value='Novo topico'>
     </form>
 
 
     {{-- Page contents --}}
     <section class='container'>
-        <div style='text-align: center; width: 100%; margin-top: 8px;'>
-            <h3>All Skills</h3>
-        </div>
         <div class='skill-listing' id='skill-listing'>
             <script>
                 let skills = [];

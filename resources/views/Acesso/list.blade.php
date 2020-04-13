@@ -5,25 +5,25 @@
     <h3>Novo acesso:</h3>
     <form action="/project/{{$project->id}}/storeAcesso" method='POST' enctype="multipart/form-data">
         @csrf
-        <label for="">Caminho:
-            <input type="text" name='address' value='{{old('address')}}'>
-            @error('address')
-                <span class='text-danger'>{{ $message }}</span>
-            @enderror
-        </label>
         <label for="">Titulo:
             <input type="text" name='title' value='{{old('title')}}'>
             @error('title')
                 <span class='text-danger'>{{ $message }}</span>
             @enderror
         </label>
-        <label for="">Usuário:
+        <label for="">Caminho*:
+            <input type="text" name='address' value='{{old('address')}}'>
+            @error('address')
+                <span class='text-danger'>{{ $message }}</span>
+            @enderror
+        </label>
+        <label for="">Usuário*:
             <input type="text" name='user' value='{{old('user')}}'>
             @error('user')
                 <span class='text-danger'>{{ $message }}</span>
             @enderror
         </label>
-        <label for="">Senha:
+        <label for="">Senha*:
             <input type="text" name='password' value='{{old('password')}}'>
             @error('password')
                 <span class='text-danger'>{{ $message }}</span>

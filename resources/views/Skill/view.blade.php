@@ -111,7 +111,19 @@
                                             <img id='note-content-{{$note->id}}' class='note-content' src="/storage/note/thumbnail/{!!$note->content!!}">
                                             <div id='note-title-{{$note->id}}' class='note-title'> {!!$note->title!!} </div>
                                         @break
-                                    @default                            
+                                    @case('youtube')
+                                        <div id='note-title-{{$note->id}}' class='note-title'> {!!$note->title!!} </div>
+                                        @php
+                                            $matches = [];
+                                            preg_match("/^(?:http(?:s)?:\/\/)?(?:www\.)?(?:m\.)?(?:youtu\.be\/|youtube\.com\/(?:(?:watch)?\?(?:.*&)?v(?:i)?=|(?:embed|v|vi|user)\/))([^\?&\"'>]+)/", 
+                                                $note->content,
+                                                $matches
+                                            );
+                                        @endphp
+                                        <iframe width="420" height="315" src="https://www.youtube.com/embed/{{$matches[1]}}">
+                                        </iframe>
+                                        @break
+                                    @default
                                 @endswitch
                             </div>
                         </div>
