@@ -41,6 +41,7 @@ Route::group(['prefix' => 'block'], function () {
 Route::group(['prefix' => 'note'], function () {
     Route::post('/ajax/update', 'NoteController@updateNote')->name('note.update');
     Route::post('/ajax/store/{type}', 'NoteController@newNote')->name('note.store');
+    Route::get('/ajax/ajax/newEmpty/{relationship}/{id}/{type}', 'NoteController@newEmptyAjax');
     Route::get('/newEmpty/{relationship}/{id}/{type}', 'NoteController@newEmpty');
     Route::get('/removeNote/{id}', 'NoteController@removeNote');
     // Route::post('/ajax/update', 'NoteController@updateAjax')->name('note.update');

@@ -1,15 +1,153 @@
+.actions{
+    svg{
+        height: 20px;
+        width: auto;
+    }
+}
+
 .skill-slot{
     margin-right: 8px;
     margin-top: 8px;
     padding: 8px;
     background-color: rgb(223, 223, 223);
     border-radius: 5px;
+    flex-direction: column;
+
+    img{
+        margin-right: 4px;
+    }
 
     a:hover{
         text-decoration: none;
     }
 }
 
+
+.skill-sidebar{
+    background-color: rgb(255, 255, 255);
+    padding: 8px 4px;
+    border: 1px solid rgb(209, 209, 209);
+    margin-right: 8px;
+    .slot{
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        flex-direction: column;
+        min-height: 40px;
+        padding: 3px;
+        margin: 2px 0px;
+        cursor: pointer;
+        background-color: transparent;
+        transition: all 0.3s ease-out;
+        position: relative;
+
+        .sidebar-skill-icon{
+            height: 40px;
+            display: flex; 
+            justify-content: center; 
+            align-items: center;   
+        }
+
+        &:hover{
+            transition: all 0.15s ease-out;
+
+            .face{
+                img{
+                    transition: all 0.3s ease-out;
+                    height: 35px!important;
+                    margin-right: 3px!important;
+                }
+                
+                &:hover{
+                    background-color: plum;
+                    transition: all 0.15s ease-out;
+                }
+            }
+        }
+
+        &.active{
+            background-color: rgb(194, 160, 221);
+            transition: all 0.15s ease-out;
+            img{
+                transition: all 0.3s ease-out;
+                height: 35px!important;
+                margin-right: 3px!important;
+            }
+        }
+
+        .head{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+
+            .face{
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                flex: 1;
+                
+                .img-wrapper{
+                    min-width: 35px;
+                }
+            }
+
+            .actions{
+                width: 20px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                .action{
+                    width: 25px;
+                }
+            }
+        }
+
+        &>.gaveta .childrens{
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+
+            .children-slot{
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                width: 100%;
+
+                &:hover{
+                    background-color: plum;
+                    transition: all 0.15s ease-out;
+                }
+            }
+        }
+    }
+}
+
+html {
+    scroll-behavior: smooth;
+  }
+
+.main-section{
+    display: flex;
+    
+    .main-body{
+        flex: 1;
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        align-content: center;
+        flex-direction: column;
+
+        .skill-contents{
+            display: flex;
+            justify-content: flex-start;
+            align-content: center;
+            flex-direction: column;
+        }
+    }
+}
 
 .block-skill-link{
     padding: 2px;
@@ -37,8 +175,9 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    width: 800px;
+    width: 850px;
     margin-bottom: 32px;
+    position: relative;
 
     .actions{
         display: flex;
@@ -47,6 +186,7 @@
         width: 100%;
         padding: 2px 4px;
         background-color: #d1c7ee;
+        border: 1px solid rgb(222, 201, 224);
 
         span{
             margin-right: 4px;
@@ -64,6 +204,63 @@
                 height: auto;
                 padding: 0px;
                 transition: all 0.2s ease;
+            }
+        }
+
+
+        .toggler{
+            position: absolute;
+            bottom: 0;
+            right: 0;
+
+            svg{
+                height: 30px;
+                max-height: 30px;
+                width: auto;
+            }
+        }
+
+        .counter{
+            color: white;
+            background-color: black;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 25px;
+            padding: 0px 4px;
+            height: 26px;
+            font-weight: bold;
+        }
+
+        .main{
+            svg{
+                width: 27px;
+                height: auto;
+                padding: 0px;
+                transition: all 0.2s ease;
+                margin-right: 8px;
+            }
+        }
+
+        &.hidden{
+            background-color: transparent;
+            border: 1px solid transparent;
+
+            svg{
+                display: none;
+            }
+            .main{
+                svg{
+                    display: flex;
+                    padding: 6px;
+                }
+
+                &:hover{
+                    svg{
+                        padding: 0px;
+                    }   
+                }
             }
         }
     }
@@ -92,6 +289,12 @@
     border-top: 1px solid #cccccc;
     padding-top: 4px;
     margin-top: 4px;
+    
+    img{
+        max-width: 100%;
+        width: 100%;
+        height: auto;
+    }
 
     .corpo{
         display: flex;
@@ -123,6 +326,11 @@
         margin-top: 4px;
         width: 100%;
         white-space: pre-wrap;
+
+        textarea{
+            white-space: pre;
+            width: 100%;
+        }
     }
 
     img.note-content{
@@ -132,4 +340,22 @@
 
 .hidden{
     display: none;
+}
+
+.d-flex{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+
+    &.flex-column{
+        &.x-left{
+            align-items: flex-start;
+        }
+
+        &.y-top{
+            justify-content: flex-start;
+        }
+    }
 }

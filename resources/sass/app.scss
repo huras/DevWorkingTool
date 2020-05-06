@@ -111,6 +111,10 @@
                 margin-right: 8px;
             }
 
+            svg{
+                width: 20px;
+            }
+
             &:hover {
                 background-color: rgba(196, 179, 255, 0.342);
                 transition: all ease-in 0.3s;
@@ -566,5 +570,13 @@ body {
 
     & > .titulo {
         margin-left: 8px;
+    }
+}
+
+.project-list{
+    .acoes{
+        svg{
+            width: 20px;
+        }
     }
 }

@@ -17,4 +17,11 @@ class Skill extends Model
     public function blocks(){
         return $this->belongsToMany('App\Models\Block');
     }
+
+    public function parents (){
+        return $this->belongsToMany('App\Models\Skill', 'skill_skill', 'child_id', 'parent_id');
+    }
+    public function childrens(){
+        return $this->belongsToMany('App\Models\Skill', 'skill_skill', 'parent_id', 'child_id');
+    }
 }

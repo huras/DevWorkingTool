@@ -17,7 +17,14 @@ class SkillController extends Controller
 
     public function view($id)
     {
-        $skills = Skill::all();
+        $sks = Skill::orderBy('name','ASC')->get();
+        $skills = [];
+        foreach($sks as $sk){
+            if(count($sk->parents) == 0){
+                $skills[]  = $sk;
+            }
+        }
+
         $skill = Skill::find($id);
         return view('Skill.view', compact('skill', 'skills'));
     }

@@ -100,7 +100,7 @@ class NoteController extends Controller
         ]);
     }
 
-    public function newEmpty(Request $request, $relationship, $id, $type)
+    public function newEmptyAjax(Request $request, $relationship, $id, $type)
     {
         //Create note
         $note = new Note;
@@ -123,15 +123,53 @@ class NoteController extends Controller
                 $block = Block::find($id);
                 $note->blocks()->save($block);
                 break;
-
             default:
                 # code...
                 break;
         }
 
         //Sends the note id back to the request sender
-        return redirect()->back();        
+        $note->save();
+        return response()->json([
+            'status' => true,
+            'toast' => 'Nota atualizada com sucesso!',
+            'toast-type' => 'job-done',
+            'data' => $note
+        ]);
     }
 
+    
     // Common Methods
+    public function newEmpty(Request $request, $relationship, $id, $type)
+    {
+        //Create note
+        $note = new Note;
+        $note->title = '[New Note]';
+        $note->content = '[empty]';
+        $note->type = $type;
+        $note->save();
+    
+        //Links note to workday's id inside the request
+        switch ($relationship) {
+            case 'workday':
+                $workday = Workday::find($id);
+                $note->workdays()->save($workday);
+                break;
+            case 'skill':
+                $skill = Skill::find($id);
+                $note->skills()->save($skill);
+                break;
+            case 'block':
+                $block = Block::find($id);
+                $note->blocks()->save($block);
+                break;
+    
+            default:
+                # code...
+                break;
+        }
+    
+        //Sends the note id back to the request sender
+        return redirect()->back();        
+    }
 }
